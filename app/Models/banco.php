@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class banco extends Model
+class Banco extends Model
 {
     use HasFactory;
     // table name
@@ -26,13 +26,13 @@ class banco extends Model
      * Method for retrieving all banks' list
      */
     public function getBanks() {
-        return bancos::all();
+        return Banco::all();
     }
 
     /**
      * Method for retrieving an especific bank
      */
     public function getBankById($id) {
-        return bancos::find($id);
+        return Banco::find($id);
     }
 }

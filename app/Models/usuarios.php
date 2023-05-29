@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class usuarios extends Model
+class Usuarios extends Model
 {
     use HasFactory;
     // table name
@@ -26,14 +26,14 @@ class usuarios extends Model
      * Method for retrieving all users' list
      */
     public function getUsers() {
-        return usuarios::all();
+        return Usuarios::all();
     }
 
     /**
      * Method for retrieving an especific user
      */
     public function getUserById($id) {
-        return usuarios::find($id);
+        return Usuarios::find($id);
     }
 
 }
