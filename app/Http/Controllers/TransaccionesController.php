@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class TransaccionesController extends Controller
 {
+    protected $transacciones;
+
+    public function __construct(Transacciones $transacciones){
+        $this->transacciones = $transacciones;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +18,8 @@ class TransaccionesController extends Controller
      */
     public function index()
     {
-        //
+        $transacciones = $this->transacciones->getTransactions();
+        return view('transactions/transactions.list', ['transacciones' => $transacciones]);
     }
 
     /**
@@ -23,7 +29,7 @@ class TransaccionesController extends Controller
      */
     public function create()
     {
-        //
+        return view('transactions/transactions.create');
     }
 
     /**
@@ -34,7 +40,9 @@ class TransaccionesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $transacciones = new Transacciones($request->all());
+        $transacciones->save();
+        return redirect()->actTransaccionesion([TransaccionesController::class, 'index']);
     }
 
     /**
@@ -56,7 +64,8 @@ class TransaccionesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $transacciones = $this->transacciones->getTransactionById($id);
+        return view('transactions/transactions.edit', ['transacciones' => $transacciones]);
     }
 
     /**
@@ -68,7 +77,10 @@ class TransaccionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $transacciones = Transacciones::find($id);
+        $transacciones->fill($request->all());
+        $transacciones->save();
+        return redirect()->action([TransaccionesController::class, 'index']);
     }
 
     /**

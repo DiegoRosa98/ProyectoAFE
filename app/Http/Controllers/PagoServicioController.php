@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class PagoServicioController extends Controller
 {
+    protected $pagoServicio;
+
+    public function __construct(PagoServicio $pagoServicio){
+        $this->pagoServicio = $pagoServicio;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class PagoServicioController extends Controller
      */
     public function index()
     {
-        //
+        $pagoServicio = $this->pagoServicio->getServicesPayment();
+        return view('services-payment/services-payment.list', ['pagoServicio' => $pagoServicio]);
     }
 
     /**
@@ -23,7 +30,7 @@ class PagoServicioController extends Controller
      */
     public function create()
     {
-        //
+        return view('services-payment/services-payment.create');
     }
 
     /**
@@ -34,7 +41,9 @@ class PagoServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pagoServicio = new PagoServicio($request->all());
+        $pagoServicio->save();
+        return redirect()->action([PagoServicioController::class, 'index']);
     }
 
     /**
@@ -56,7 +65,8 @@ class PagoServicioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pagoServicio = $this->pagoServicio->getServicesPaymentById($id);
+        return view('services-payment/services-payment.edit', ['pagoServicio' => $pagoServicio]);
     }
 
     /**
@@ -68,7 +78,10 @@ class PagoServicioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pagoServicio = PagoServicio::find($id);
+        $pagoServicio->fill($request->all());
+        $pagoServicio->save();
+        return redirect()->action([PagoServicioController::class, 'index']);
     }
 
     /**

@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class CuentasController extends Controller
 {
+    protected $cuentas;
+
+    public function __construct(Banco $cuentas){
+        $this->cuentas = $cuentas;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class CuentasController extends Controller
      */
     public function index()
     {
-        //
+        $cuentas = $this->cuentas->getAccounts();
+        return view('accounts/accounts.list', ['cuentas' => $cuentas]);
     }
 
     /**
@@ -23,7 +30,7 @@ class CuentasController extends Controller
      */
     public function create()
     {
-        //
+        return view('accounts/accounts.create');
     }
 
     /**
@@ -34,7 +41,9 @@ class CuentasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cuentas = new Cuentas($request->all());
+        $cuentas->save();
+        return redirect()->action([CuentasController::class, 'index']);
     }
 
     /**
@@ -56,7 +65,8 @@ class CuentasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cuentas = $this->cuentas->getAccountById($id);
+        return view('accounts/accounts.edit', ['cuentas' => $cuentas]);
     }
 
     /**
@@ -68,7 +78,10 @@ class CuentasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cuentas = Cuentas::find($id);
+        $cuentas->fill($request->all());
+        $cuentas->save();
+        return redirect()->action([CuentasController::class, 'index']);
     }
 
     /**
