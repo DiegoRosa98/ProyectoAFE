@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TipoServicio;
 
 class TipoServicioController extends Controller
 {
