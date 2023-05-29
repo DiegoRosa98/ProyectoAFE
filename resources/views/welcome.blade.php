@@ -27,7 +27,8 @@
                                 </g>
                             </svg>
                         </div>
-                        <div class="col-md-4 col-sm-12">
+                        <div class="col-2"></div>
+                        <div class="col-md-6 col-sm-12">
                             <form class="needs-validation" action="" method="post" novalidate>
                                 <div class="form-group my-3">
                                     <label for="username" class="form-label fw-bolder">Username:</label>
