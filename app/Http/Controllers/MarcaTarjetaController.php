@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PerfilesController extends Controller
+class MarcaTarjetaController extends Controller
 {
-    protected $perfiles;
+    protected $marcas;
 
-    public function __construct(Perfiles $perfiles){
-        $this->perfiles = $perfiles;
+    public function __construct(MarcaTarjeta $marcas){
+        $this->marcas = $marcas;
     }
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class PerfilesController extends Controller
      */
     public function index()
     {
-        $perfiles = $this->perfiles->getProfiles();
-        return view('profiles/profiles.list', ['perfiles' => $perfiles]);
+        $marcas = $this->marcas->getCardBrands();
+        return view('card-brands/card-brands.list', ['marcas' => $marcas]);
     }
 
     /**
@@ -29,7 +29,7 @@ class PerfilesController extends Controller
      */
     public function create()
     {
-        return view('profiles/profiles.create');
+        return view('card-brands/card-brands.create');
     }
 
     /**
@@ -40,9 +40,9 @@ class PerfilesController extends Controller
      */
     public function store(Request $request)
     {
-        $perfiles = new Perfiles($request->all());
-        $perfiles->save();
-        return redirect()->action([PerfilesController::class, 'index']);
+        $marcas = new MarcaTarjeta($request->all());
+        $marcas->save();
+        return redirect()->action([MarcaTarjetaController::class, 'index']);
     }
 
     /**
@@ -64,8 +64,8 @@ class PerfilesController extends Controller
      */
     public function edit($id)
     {
-        $perfiles = $this->perfiles->getProfileById($id);
-        return view('profiles/profiles.edit', ['perfiles' => $perfiles]);
+        $marcas = $this->marcas->getCardBrandById($id);
+        return view('card-brands/card-brands.edit', ['marcas' => $marcas]);
     }
 
     /**
@@ -77,10 +77,10 @@ class PerfilesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $perfiles = Perfiles::find($id);
-        $perfiles->fill($request->all());
-        $perfiles->save();
-        return redirect()->action([PerfilesController::class, 'index']);
+        $marcas = MarcaTarjeta::find($id);
+        $marcas->fill($request->all());
+        $marcas->save();
+        return redirect()->action([MarcaTarjetaController::class, 'index']);
     }
 
     /**

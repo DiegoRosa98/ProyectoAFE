@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class TipoServicioController extends Controller
 {
+    protected $tipoServicio;
+
+    public function __construct(TipoServicio $tipoServicio){
+        $this->tipoServicio = $tipoServicio;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +18,8 @@ class TipoServicioController extends Controller
      */
     public function index()
     {
-        //
+        $tipoServicio = $this->tipoServicio->getServiceTypes();
+        return view('service-type/service-type.list', ['tipoServicio' => $tipoServicio]);
     }
 
     /**
@@ -23,7 +29,7 @@ class TipoServicioController extends Controller
      */
     public function create()
     {
-        //
+        return view('service-type/service-type.create');
     }
 
     /**
@@ -34,7 +40,9 @@ class TipoServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tipoServicio = new TipoServicio($request->all());
+        $tipoServicio->save();
+        return redirect()->action([TipoServicioController::class, 'index']);
     }
 
     /**
@@ -56,7 +64,8 @@ class TipoServicioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tipoServicio = $this->tipoServicio->getServiceTypeById($id);
+        return view('service-type/service-type.edit', ['tipoServicio' => $tipoServicio]);
     }
 
     /**
@@ -68,7 +77,10 @@ class TipoServicioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tipoServicio = TipoServicio::find($id);
+        $tipoServicio->fill($request->all());
+        $tipoServicio->save();
+        return redirect()->action([TipoServicioController::class, 'index']);
     }
 
     /**

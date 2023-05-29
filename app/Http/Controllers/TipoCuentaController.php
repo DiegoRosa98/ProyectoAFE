@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class TipoCuentaController extends Controller
 {
+    protected $tipoCuenta;
+
+    public function __construct(TipoCuenta $tipoCuenta){
+        $this->tipoCuenta = $tipoCuenta;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +18,8 @@ class TipoCuentaController extends Controller
      */
     public function index()
     {
-        //
+        $tipoCuenta = $this->tipoCuenta->getAccountType();
+        return view('account-type/account-type.list', ['tipoCuenta' => $tipoCuenta]);
     }
 
     /**
@@ -23,7 +29,7 @@ class TipoCuentaController extends Controller
      */
     public function create()
     {
-        //
+        return view('account-type/account-type.create');
     }
 
     /**
@@ -34,7 +40,9 @@ class TipoCuentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tipoCuenta = new TipoCuenta($request->all());
+        $tipoCuenta->save();
+        return redirect()->action([TipoCuentaController::class, 'index']);
     }
 
     /**
@@ -56,7 +64,8 @@ class TipoCuentaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tipoCuenta = $this->tipoCuenta->getAccountTypeById($id);
+        return view('account-type/account-type.edit', ['tipoCuenta' => $tipoCuenta]);
     }
 
     /**
@@ -68,7 +77,10 @@ class TipoCuentaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tipoCuenta = TipoCuenta::find($id);
+        $tipoCuenta->fill($request->all());
+        $tipoCuenta->save();
+        return redirect()->action([TipoCuentaController::class, 'index']);
     }
 
     /**

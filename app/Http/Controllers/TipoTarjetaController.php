@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PerfilesController extends Controller
+class TipoTarjetaController extends Controller
 {
-    protected $perfiles;
+    protected $tipoTarjeta;
 
-    public function __construct(Perfiles $perfiles){
-        $this->perfiles = $perfiles;
+    public function __construct(TipoTarjeta $tipoTarjeta){
+        $this->tipoTarjeta = $tipoTarjeta;
     }
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class PerfilesController extends Controller
      */
     public function index()
     {
-        $perfiles = $this->perfiles->getProfiles();
-        return view('profiles/profiles.list', ['perfiles' => $perfiles]);
+        $tipoTarjeta = $this->tipoTarjeta->getCardTypes();
+        return view('card-type/card-type.list', ['tipoTarjeta' => $tipoTarjeta]);
     }
 
     /**
@@ -29,7 +29,7 @@ class PerfilesController extends Controller
      */
     public function create()
     {
-        return view('profiles/profiles.create');
+        return view('card-type/card-type.create');
     }
 
     /**
@@ -40,9 +40,9 @@ class PerfilesController extends Controller
      */
     public function store(Request $request)
     {
-        $perfiles = new Perfiles($request->all());
-        $perfiles->save();
-        return redirect()->action([PerfilesController::class, 'index']);
+        $tipoTarjeta = new TipoTarjeta($request->all());
+        $tipoTarjeta->save();
+        return redirect()->action([TipoTarjetaController::class, 'index']);
     }
 
     /**
@@ -64,8 +64,8 @@ class PerfilesController extends Controller
      */
     public function edit($id)
     {
-        $perfiles = $this->perfiles->getProfileById($id);
-        return view('profiles/profiles.edit', ['perfiles' => $perfiles]);
+        $tipoTarjeta = $this->tipoTarjeta->getCardTypeById($id);
+        return view('card-type/card-type.edit', ['tipoTarjeta' => $tipoTarjeta]);
     }
 
     /**
@@ -77,10 +77,10 @@ class PerfilesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $perfiles = Perfiles::find($id);
-        $perfiles->fill($request->all());
-        $perfiles->save();
-        return redirect()->action([PerfilesController::class, 'index']);
+        $tipoTarjeta = TipoTarjeta::find($id);
+        $tipoTarjeta->fill($request->all());
+        $tipoTarjeta->save();
+        return redirect()->action([TipoTarjetaController::class, 'index']);
     }
 
     /**

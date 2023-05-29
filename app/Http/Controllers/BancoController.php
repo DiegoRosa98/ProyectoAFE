@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Banco;
 
 class BancoController extends Controller
 {
+    protected $bancos;
+
+    public function __construct(Banco $bancos){
+        $this->bancos = $bancos;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,8 @@ class BancoController extends Controller
      */
     public function index()
     {
-        //
+        $bancos = $this->bancos->getBanks();
+        return view('banks/banks.list', ['bancos' => $bancos]);
     }
 
     /**
@@ -23,7 +31,7 @@ class BancoController extends Controller
      */
     public function create()
     {
-        //
+        return view('banks/banks.create');
     }
 
     /**
@@ -34,7 +42,9 @@ class BancoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $bancos = new Banco($request->all());
+        $bancos->save();
+        return redirect()->action([BancoController::class, 'index']);
     }
 
     /**
@@ -56,7 +66,8 @@ class BancoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $bancos = $this->bancos->getBankById($id);
+        return view('banks/banks.edit', ['bancos' => $bancos]);
     }
 
     /**
@@ -68,7 +79,10 @@ class BancoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $bancos = Banco::find($id);
+        $bancos->fill($request->all());
+        $bancos->save();
+        return redirect()->action([BancoController::class, 'index']);
     }
 
     /**

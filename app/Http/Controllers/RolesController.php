@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class RolesController extends Controller
 {
+    protected $roles;
+
+    public function __construct(Roles $roles){
+        $this->roles = $roles;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +18,8 @@ class RolesController extends Controller
      */
     public function index()
     {
-        //
+        $roles = $this->roles->getRoles();
+        return view('roles/roles.list', ['roles' => $roles]);
     }
 
     /**
@@ -23,7 +29,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        //
+        return view('roles/roles.create');
     }
 
     /**
@@ -34,7 +40,9 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $roles = new Roles($request->all());
+        $roles->save();
+        return redirect()->action([RolesController::class, 'index']);
     }
 
     /**
@@ -56,7 +64,8 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $roles = $this->roles->getRoleById($id);
+        return view('roles/roles.edit', ['roles' => $roles]);
     }
 
     /**
@@ -68,7 +77,10 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $roles = Roles::find($id);
+        $roles->fill($request->all());
+        $roles->save();
+        return redirect()->action([RolesController::class, 'index']);
     }
 
     /**

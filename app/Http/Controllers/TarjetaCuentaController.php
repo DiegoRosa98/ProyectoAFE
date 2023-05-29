@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PerfilesController extends Controller
+class TarjetaCuentaController extends Controller
 {
-    protected $perfiles;
+    protected $tarjetas;
 
-    public function __construct(Perfiles $perfiles){
-        $this->perfiles = $perfiles;
+    public function __construct(TarjetaCuenta $tarjetas){
+        $this->tarjetas = $tarjetas;
     }
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class PerfilesController extends Controller
      */
     public function index()
     {
-        $perfiles = $this->perfiles->getProfiles();
-        return view('profiles/profiles.list', ['perfiles' => $perfiles]);
+        $tarjetas = $this->tarjetas->getCards();
+        return view('cards/cards.list', ['tarjetas' => $tarjetas]);
     }
 
     /**
@@ -29,7 +29,7 @@ class PerfilesController extends Controller
      */
     public function create()
     {
-        return view('profiles/profiles.create');
+        return view('cards/cards.create');
     }
 
     /**
@@ -40,9 +40,9 @@ class PerfilesController extends Controller
      */
     public function store(Request $request)
     {
-        $perfiles = new Perfiles($request->all());
-        $perfiles->save();
-        return redirect()->action([PerfilesController::class, 'index']);
+        $tarjetas = new TarjetaCuenta($request->all());
+        $tarjetas->save();
+        return redirect()->action([TarjetaCuentaController::class, 'index']);
     }
 
     /**
@@ -64,8 +64,8 @@ class PerfilesController extends Controller
      */
     public function edit($id)
     {
-        $perfiles = $this->perfiles->getProfileById($id);
-        return view('profiles/profiles.edit', ['perfiles' => $perfiles]);
+        $tarjetas = $this->tarjetas->getCardById($id);
+        return view('cards/cards.edit', ['tarjetas' => $tarjetas]);
     }
 
     /**
@@ -77,10 +77,10 @@ class PerfilesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $perfiles = Perfiles::find($id);
-        $perfiles->fill($request->all());
-        $perfiles->save();
-        return redirect()->action([PerfilesController::class, 'index']);
+        $tarjetas = TarjetaCuenta::find($id);
+        $tarjetas->fill($request->all());
+        $tarjetas->save();
+        return redirect()->action([TarjetaCuentaController::class, 'index']);
     }
 
     /**
