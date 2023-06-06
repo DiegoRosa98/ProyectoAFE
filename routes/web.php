@@ -32,3 +32,15 @@ Route::get('/usuarios/logout', [UsuariosController::class, 'logout']);
 Route::get('/respuesta', function () {
     return view('respuesta');
 });
+Route::get('/home', function () {
+    return view('home-client');
+});
+
+Route::get('/admin', function () {
+    return view('home-admin');
+});
+
+// admin routes
+Route::get('/admin/roles', function () {
+    return view('roles\roles-list');
+});
