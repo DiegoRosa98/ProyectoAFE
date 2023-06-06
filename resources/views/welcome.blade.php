@@ -29,17 +29,18 @@
                         </div>
                         <div class="col-2"></div>
                         <div class="col-md-6 col-sm-12">
-                            <form class="needs-validation" action="" method="post" novalidate>
+                            <form class="needs-validation" action="/usuarios/login" method="post" novalidate>
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="form-group my-3">
                                     <label for="username" class="form-label fw-bolder">Username:</label>
-                                    <input type="text" class="form-control" id="username" required>
+                                    <input type="text" class="form-control" id="username" name="username" required>
                                     <div class="invalid-feedback">
                                         Please provide a username.
                                     </div>
                                 </div>
                                 <div class="form-group my-3">
                                     <label for="userPassword" class="form-label fw-bolder">Password:</label>
-                                    <input type="password" class="form-control" id="userPassword" required>
+                                    <input type="password" class="form-control" id="userPassword" name="userPassword" required>
                                     <div class="invalid-feedback">
                                         Please provide your password.
                                     </div>
@@ -47,6 +48,8 @@
                                 <div class="col-12 d-flex justify-content-center">
                                     <button type="submit" class="btn btn-outline-secondary fw-semibold">Log in</button>
                                 </div>
+                                <br>
+                                <center><a href="/usuarios/crear">Si no tienes una cuenta registrate aquí</a></center>
                             </form>
                         </div>
                     </div>

@@ -36,4 +36,39 @@ class Usuarios extends Model
         return Usuarios::find($id);
     }
 
+    public function login($user, $pass) {
+        $usuario = Usuarios::where('username', $user)->where('clave',$pass)->get();
+        if($usuario->count() > 0)
+        {
+            ///////////////////GUARDANDO SESIONES///////////////////
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['ID']=$usuario->first()->id;
+            $_SESSION['USER']=$usuario->first()->username;
+            $_SESSION['ROL']=$usuario->first()->idRol;
+            /////////////////////GENERAR TOKEN//////////////////////
+            date_default_timezone_set('America/El_Salvador');
+            $token = bin2hex(random_bytes(50));
+            $expiracion = date('Y-m-d H:i:s', strtotime('+60 seconds'));
+            Usuarios::where('id', $_SESSION['ID'])->update(array('token' => $token, 'expires' => $expiracion));
+            $_SESSION['EXPIRES']=$expiracion;
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+        
+    }
+
+    public function logout() 
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        Usuarios::where('id', $_SESSION['ID'])->update(array('token' => null, 'expires' => null));
+        session_destroy();
+    }
+
 }

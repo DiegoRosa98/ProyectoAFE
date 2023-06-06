@@ -7,6 +7,15 @@ use App\Models\Usuarios;
 
 class UsuariosController extends Controller
 {
+
+    protected $usuarios;
+
+    public function __construct(Usuarios $usuarios)
+    {
+        $this->usuarios = $usuarios;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,7 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -24,7 +33,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        return view('registro');
     }
 
     /**
@@ -35,7 +44,10 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usuario = new Usuarios($request->all());
+        $usuario->clave = hash('sha256', $request->post('clave'));
+        $usuario->save();
+        return redirect()->action([UsuariosController::class, 'index']);
     }
 
     /**
@@ -81,5 +93,29 @@ class UsuariosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //Inicio de sesión
+    public function login(Request $request)
+    {
+        $nombre = $request->post('username');
+        $contra = hash('sha256', $request->post('userPassword'));
+        $usuarios = $this->usuarios->login($nombre, $contra);
+        if($usuarios==1)
+        {
+            return redirect('/respuesta')->with('respuesta', $usuarios);
+        }
+        else
+        {
+            return redirect()->action([UsuariosController::class, 'index']);
+        }
+        
+    }
+
+    //Cerrar sesión
+    public function logout()
+    {
+        $this->usuarios->logout();
+        return redirect()->action([UsuariosController::class, 'index']);
     }
 }

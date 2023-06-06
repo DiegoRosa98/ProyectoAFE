@@ -19,6 +19,8 @@ class CreateUsuariosTable extends Migration
             $table->string('correo', 255);
             $table->string('username', 255);
             $table->string('clave', 255);
+            $table->string('token', 255)->nullable();
+            $table->dateTime('expires')->nullable();
             $table->unsignedBigInteger('idRol');
             $table->foreign('idRol')->references('id')->on('roles');
             $table->integer('estado');
