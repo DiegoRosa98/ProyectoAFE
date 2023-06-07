@@ -1,3 +1,19 @@
+<?php
+    date_default_timezone_set('America/El_Salvador');
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $now = date('Y-m-d H:i:s');
+    $usuario = $_SESSION['USER'];
+    if($now>$_SESSION['EXPIRES'])
+    {
+        return redirect()->to('/usuarios/logout')->send();
+    }
+    if($_SESSION['ROL']!=2)
+    {
+        return redirect()->to('/admin')->send();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -76,6 +92,7 @@
                 </a>
                 <a href="#" class="">
                     <i class="bx bx-user nav_icon"></i>
+                    <?php echo($usuario) ?>
                 </a>
             </div>
         </header>
@@ -91,22 +108,22 @@
                             <i class="bx bxs-bank nav_icon"></i>
                             <span class="nav_name">Cuenta</span>
                         </a>
-                        <a href="#" class="nav_link">
+                        <!-- <a href="#" class="nav_link">
                             <i class="bx bx-user nav_icon"></i>
                             <span class="nav_name">Perfil</span>
                         </a>
                         <a href="#" class="nav_link">
                             <i class="bx bxs-chevrons-right nav_icon"></i>
                             <span class="nav_name">Transferencias</span>
-                        </a>
+                        </a> -->
                         <!-- <a href="#" class="nav_link">
                             <i class="bx bx-message-square-detail nav_icon"></i>
                             <span class="nav_name">Messages</span>
                         </a> -->
-                        <a href="#" class="nav_link">
+                        <!-- <a href="#" class="nav_link">
                             <i class="bx bx-abacus nav_icon"></i>
                             <span class="nav_name">Servicios</span>
-                        </a>
+                        </a> -->
                         <!-- <a href="#" class="nav_link">
                             <i class="bx bx-folder nav_icon"></i>
                             <span class="nav_name">Files</span>
@@ -114,7 +131,7 @@
 
                     </div>
                 </div>
-                <a href="/" class="nav_link">
+                <a href="/usuarios/logout" class="nav_link">
                     <i class="bx bx-log-out nav_icon"></i>
                     <span class="nav_name">Log Out</span>
                 </a>
@@ -135,7 +152,7 @@
                             <i class="bx bx-chevron-right nav_icon mx-1"></i>
                         </a>
                     </div>
-                    <h6>Israel José González Méndez</h6>
+                    <h6><?php echo($usuario) ?></h6>
                     <div class="d-flex justify-content-between">
                         <label for="">No. 04556045</label>
                         <label for="" class="fw-bolder">$1050.60</label>
@@ -154,7 +171,7 @@
                             <i class="bx bx-chevron-right nav_icon mx-1"></i>
                         </a>
                     </div>
-                    <h6>Israel José González Méndez</h6>
+                    <h6><?php echo($usuario) ?></h6>
                     <div class="d-flex justify-content-between">
                         <label for="">xxxx xxxx xxxx 6045</label>
                         <div>

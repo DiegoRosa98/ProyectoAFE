@@ -53,16 +53,20 @@ class Usuarios extends Model
             $expiracion = date('Y-m-d H:i:s', strtotime('+60 seconds'));
             Usuarios::where('id', $_SESSION['ID'])->update(array('token' => $token, 'expires' => $expiracion));
             $_SESSION['EXPIRES']=$expiracion;
-            return 1;
+            if($usuario->first()->idRol === 1){
+                return 1;
+            }else{
+                return 2;
+            }
         }
         else
         {
             return 0;
         }
-        
+
     }
 
-    public function logout() 
+    public function logout()
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();

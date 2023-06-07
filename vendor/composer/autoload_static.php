@@ -33,6 +33,8 @@ class ComposerStaticInit86b10928d9e6fe07309140038d6ff00b
         'c7a3c339e7e14b60e06a2d7fcce9476b' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Events/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        'c72349b1fe8d0deeedd3a52e8aa814d8' => __DIR__ . '/..' . '/mockery/mockery/library/helpers.php',
+        'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     );
 
@@ -108,6 +110,7 @@ class ComposerStaticInit86b10928d9e6fe07309140038d6ff00b
         'M' => 
         array (
             'Monolog\\' => 8,
+            'Mockery\\' => 8,
         ),
         'L' => 
         array (
@@ -353,6 +356,10 @@ class ComposerStaticInit86b10928d9e6fe07309140038d6ff00b
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'Mockery\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mockery/mockery/library/Mockery',
+        ),
         'League\\MimeTypeDetection\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/mime-type-detection/src',
@@ -485,16 +492,6 @@ class ComposerStaticInit86b10928d9e6fe07309140038d6ff00b
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
-        ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'M' => 
-        array (
-            'Mockery' => 
-            array (
-                0 => __DIR__ . '/..' . '/mockery/mockery/library',
-            ),
         ),
     );
 
@@ -3185,7 +3182,6 @@ class ComposerStaticInit86b10928d9e6fe07309140038d6ff00b
         'League\\MimeTypeDetection\\GeneratedExtensionToMimeTypeMap' => __DIR__ . '/..' . '/league/mime-type-detection/src/GeneratedExtensionToMimeTypeMap.php',
         'League\\MimeTypeDetection\\MimeTypeDetector' => __DIR__ . '/..' . '/league/mime-type-detection/src/MimeTypeDetector.php',
         'League\\MimeTypeDetection\\OverridingExtensionToMimeTypeMap' => __DIR__ . '/..' . '/league/mime-type-detection/src/OverridingExtensionToMimeTypeMap.php',
-        'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',
         'Mockery\\Adapter\\Phpunit\\MockeryTestCase' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCase.php',
@@ -3206,6 +3202,7 @@ class ComposerStaticInit86b10928d9e6fe07309140038d6ff00b
         'Mockery\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Exception/InvalidArgumentException.php',
         'Mockery\\Exception\\InvalidCountException' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Exception/InvalidCountException.php',
         'Mockery\\Exception\\InvalidOrderException' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Exception/InvalidOrderException.php',
+        'Mockery\\Exception\\MockeryExceptionInterface' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Exception/MockeryExceptionInterface.php',
         'Mockery\\Exception\\NoMatchingExpectationException' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Exception/NoMatchingExpectationException.php',
         'Mockery\\Exception\\RuntimeException' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Exception/RuntimeException.php',
         'Mockery\\Expectation' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Expectation.php',
@@ -3224,6 +3221,7 @@ class ComposerStaticInit86b10928d9e6fe07309140038d6ff00b
         'Mockery\\Generator\\StringManipulationGenerator' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Generator/StringManipulationGenerator.php',
         'Mockery\\Generator\\StringManipulation\\Pass\\AvoidMethodClashPass' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Generator/StringManipulation/Pass/AvoidMethodClashPass.php',
         'Mockery\\Generator\\StringManipulation\\Pass\\CallTypeHintPass' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Generator/StringManipulation/Pass/CallTypeHintPass.php',
+        'Mockery\\Generator\\StringManipulation\\Pass\\ClassAttributesPass' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Generator/StringManipulation/Pass/ClassAttributesPass.php',
         'Mockery\\Generator\\StringManipulation\\Pass\\ClassNamePass' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Generator/StringManipulation/Pass/ClassNamePass.php',
         'Mockery\\Generator\\StringManipulation\\Pass\\ClassPass' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Generator/StringManipulation/Pass/ClassPass.php',
         'Mockery\\Generator\\StringManipulation\\Pass\\ConstantsPass' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Generator/StringManipulation/Pass/ConstantsPass.php',
@@ -5594,7 +5592,6 @@ class ComposerStaticInit86b10928d9e6fe07309140038d6ff00b
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit86b10928d9e6fe07309140038d6ff00b::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit86b10928d9e6fe07309140038d6ff00b::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit86b10928d9e6fe07309140038d6ff00b::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit86b10928d9e6fe07309140038d6ff00b::$classMap;
 
         }, null, ClassLoader::class);

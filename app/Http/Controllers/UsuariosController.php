@@ -103,13 +103,15 @@ class UsuariosController extends Controller
         $usuarios = $this->usuarios->login($nombre, $contra);
         if($usuarios==1)
         {
-            return redirect('/respuesta')->with('respuesta', $usuarios);
+            return redirect('/admin')->with('respuesta', $usuarios);
         }
-        else
+        else if($usuarios==2){
+            return redirect('/home')->with('respuesta', $usuarios);
+        }else
         {
             return redirect()->action([UsuariosController::class, 'index']);
         }
-        
+
     }
 
     //Cerrar sesión

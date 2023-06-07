@@ -1,3 +1,18 @@
+<?php
+    date_default_timezone_set('America/El_Salvador');
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $now = date('Y-m-d H:i:s');
+    if($now>$_SESSION['EXPIRES'])
+    {
+        return redirect()->to('/usuarios/logout')->send();
+    }
+    if($_SESSION['ROL']!=1)
+    {
+        return redirect()->to('/home')->send();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

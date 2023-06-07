@@ -1,3 +1,19 @@
+<?php
+    date_default_timezone_set('America/El_Salvador');
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    $now = date('Y-m-d H:i:s');
+    $usuario = $_SESSION['USER'];
+    if($now>$_SESSION['EXPIRES'])
+    {
+        return redirect()->to('/usuarios/logout')->send();
+    }
+    if($_SESSION['ROL']!=1)
+    {
+        return redirect()->to('/home')->send();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -76,6 +92,7 @@
                 </a>
                 <a href="#" class="">
                     <i class="bx bx-user nav_icon"></i>
+                    <?php echo($usuario) ?>
                 </a>
             </div>
         </header>
@@ -91,19 +108,19 @@
                             <i class="bx bxs-bank nav_icon"></i>
                             <span class="nav_name">Menu</span>
                         </a>
-                        <a href="#" class="nav_link">
+                        <!-- <a href="#" class="nav_link">
                             <i class="bx bx-user nav_icon"></i>
                             <span class="nav_name">Perfil</span>
                         </a>
                         <a href="#" class="nav_link">
                             <i class="bx bx-abacus nav_icon"></i>
                             <span class="nav_name">Configuración</span>
-                        </a>
+                        </a> -->
 
 
                     </div>
                 </div>
-                <a href="/" class="nav_link">
+                <a href="/usuarios/logout" class="nav_link">
                     <i class="bx bx-log-out nav_icon"></i>
                     <span class="nav_name">Log Out</span>
                 </a>
@@ -121,7 +138,7 @@
                                 <i class="bx bxs-user-account nav_icon mx-1" style="vertical-align: middle;"></i>
                                 <h5>Configuración de Roles</h5>
                             </div>
-                            <a href="#">
+                            <a href="/admin/roles">
                                 <i class="bx bx-chevron-right nav_icon mx-1"></i>
                             </a>
                         </div>
