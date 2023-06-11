@@ -7,7 +7,7 @@
     $usuario = $_SESSION['USER'];
     if($now>$_SESSION['EXPIRES'])
     {
-        return redirect()->to('/usuarios/logout')->send();
+        return redirect()->to('/logout')->send();
     }
     if($_SESSION['ROL']!=2)
     {
@@ -131,7 +131,7 @@
 
                     </div>
                 </div>
-                <a href="/usuarios/logout" class="nav_link">
+                <a href="/logout" class="nav_link">
                     <i class="bx bx-log-out nav_icon"></i>
                     <span class="nav_name">Log Out</span>
                 </a>

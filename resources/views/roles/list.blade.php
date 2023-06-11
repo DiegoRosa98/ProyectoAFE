@@ -4,13 +4,17 @@
         session_start();
     }
     $now = date('Y-m-d H:i:s');
-    if($now>$_SESSION['EXPIRES'])
-    {
-        return redirect()->to('/usuarios/logout')->send();
-    }
-    if($_SESSION['ROL']!=1)
-    {
-        return redirect()->to('/home')->send();
+    if($_SESSION){
+        if($now>$_SESSION['EXPIRES'])
+        {
+            return redirect()->to('/logout')->send();
+        }
+        if($_SESSION['ROL']!=1)
+        {
+            return redirect()->to('/home')->send();
+        }
+    }else{
+        return redirect()->to('/')->send();
     }
 ?>
 <!DOCTYPE html>
@@ -21,6 +25,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Gestión de Roles</title>
 
+        <!-- sweetalert -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
         <!-- bootstrap css cdn link -->
@@ -43,6 +49,18 @@
                 background-color: white;
                 border-color: #528D7D;
                 color: #528D7D;
+                font-weight: 700;
+            }
+            .btn-back{
+                background-color: #4E86B9;
+                border-color: #4E86B9;
+                color: white;
+            }
+            .btn-back:hover{
+                background-color: white;
+                border-color: #4E86B9;
+                color: #4E86B9;
+                font-weight: 700;
             }
             .btn-edit{
                 background-color: white;
@@ -109,6 +127,7 @@
         </script>
     </head>
     <body id="body-pd" style="background-color: #F7F6FB;">
+        <!-- template -->
         <header class="header" id="header">
             <div class="header_toggle">
                 <i class="bx bx-menu" id="header-toggle"></i>
@@ -124,6 +143,49 @@
                 </a>
             </div>
         </header>
+        <script>
+            function logoutConfirm() {
+                Swal.fire({
+                    title: '¡Advertencia!',
+                    text: '¿Está seguro de salir?',
+                    icon: 'warning',
+                    confirmButtonText: 'Sí',
+                    showDenyButton: true,
+                    denyButtonText: 'No',
+
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        window.location.replace('/logout')
+                    }
+                })
+            }
+            function deleteConfirm($id) {
+                Swal.fire({
+                    title: '¡Advertencia!',
+                    text: '¿Está seguro de eliminar el registro?',
+                    icon: 'warning',
+                    confirmButtonText: 'Sí',
+                    showDenyButton: true,
+                    denyButtonText: 'No',
+
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        window.location.replace('/admin/roles/eliminar/'+$id)
+                    }
+                })
+            }
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+        </script>
         <div class="l-navbar" id="nav-bar">
             <nav class="nav">
                 <div>
@@ -132,141 +194,80 @@
                         <span class="nav_logo-name">Banco GSA-SIFE</span>
                     </a>
                     <div class="nav_list">
-                        <a href="#" class="nav_link">
+                        <a href="/" class="nav_link">
                             <i class="bx bxs-bank nav_icon"></i>
                             <span class="nav_name">Home</span>
                         </a>
 
-                        <a href="#" class="nav_link">
+                        <!-- <a href="#" class="nav_link">
                             <i class="bx bx-user nav_icon"></i>
                             <span class="nav_name">Perfil</span>
                         </a>
                         <a href="#" class="nav_link">
                             <i class="bx bx-abacus nav_icon"></i>
                             <span class="nav_name">Configuración</span>
-                        </a>
+                        </a> -->
 
                     </div>
                 </div>
-                <a href="/" class="nav_link">
+                <a role="button" onclick="logoutConfirm()" class="nav_link">
                     <i class="bx bx-log-out nav_icon"></i>
                     <span class="nav_name">Log Out</span>
                 </a>
             </nav>
         </div>
+        <!-- end template -->
         <!--Container Main start-->
         <div class=" bg-light">
             <h4>Configuración de Roles</h4>
-            <div class="d-flex justify-content-end my-3">
-                <button type="button" class="btn btn-outline-secondary btn-add">
+            <div class="d-flex justify-content-between my-3 mx-3">
+                <a href="/admin" class="btn btn-outline-secondary btn-back mx-2">
+                    <i class="bx bx-arrow-back nav_icon" style="vertical-align: sub;"></i>Regresar
+                </a>
+                <a href="/admin/roles/crear" class="btn btn-outline-secondary btn-add" >
                     <i class="bx bx-plus nav_icon" style="vertical-align: sub;"></i>Nuevo Rol
-                </button>
+                </a>
             </div>
 
-            <div class="">
-                <div class="card col-12 m-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5>Administrador</h5>
-                                <h6>Descripción del rol</h6>
-                            </div>
-                            <div>
-                                <a class="btn btn-outline-primary btn-edit" href="#">
-                                    <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
-                                <a class="btn btn-outline-danger btn-del" href="#">
-                                    <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card col-12 m-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5>Cliente</h5>
-                                <h6>Descripción del rol</h6>
-                            </div>
-                            <div>
-                                <a class="btn btn-outline-primary btn-edit" href="#">
-                                    <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
-                                <a class="btn btn-outline-danger btn-del" href="#">
-                                    <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
+            <!-- data list -->
+            <div class="mx-3">
+                @if(session("message"))
+                    <script>
+                        Toast.fire({
+                            icon: 'success',
+                            title: '{{session("message")}}'
+                        });
+                    </script>
+                @endif
+                @foreach ($roles as $rol)
+                    <div class="card col-12 m-2">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5>{{ $rol->nombre }}</h5>
+                                    <h6>Fecha creación: {{ $rol->created_at }}</h6>
+                                    <h6>Última modificación: {{ $rol->updated_at }}</h6>
+                                </div>
+                                <div>
+                                    <a class="btn btn-outline-primary btn-edit" href="/admin/roles/editar/{{$rol->id}}">
+                                        <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-del" role="button" onclick="deleteConfirm('{{$rol->id}}')">
+                                        <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card col-12 m-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5>Atención al Cliente</h5>
-                                <h6>Descripción del rol</h6>
-                            </div>
-                            <div>
-                                <a class="btn btn-outline-primary btn-edit" href="#">
-                                    <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
-                                <a class="btn btn-outline-danger btn-del" href="#">
-                                    <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card col-12 m-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5>Ventas</h5>
-                                <h6>Descripción del rol</h6>
-                            </div>
-                            <div>
-                                <a class="btn btn-outline-primary btn-edit" href="#">
-                                    <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
-                                <a class="btn btn-outline-danger btn-del" href="#">
-                                    <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card col-12 m-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5>Reportería</h5>
-                                <h6>Descripción del rol</h6>
-                            </div>
-                            <div>
-                                <a class="btn btn-outline-primary btn-edit" href="#">
-                                    <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
-                                <a class="btn btn-outline-danger btn-del" href="#">
-                                    <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
 
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
+                <div class="">
+                    {{ $roles->links('vendor.pagination.bootstrap-4') }}
+                </div>
             </div>
-
+            <!-- data list -->
         </div>
         <!--Container Main end-->
+
     </body>
 </html>

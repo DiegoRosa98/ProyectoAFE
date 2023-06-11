@@ -49,7 +49,7 @@
                         </div>
                         <div class="col-md-1 col-lg-2"></div>
                         <div class="col-md-6 col-sm-12">
-                            <form class="needs-validation" action="/usuarios/login" method="post" novalidate>
+                            <form class="needs-validation" action="/login" method="post" novalidate>
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="form-group my-3">
                                     <label for="username" class="form-label fw-bolder">Username:</label>
@@ -70,7 +70,7 @@
                                 </div>
                                 <br>
                                 <div class="d-flex justify-content-center">
-                                    <a href="/usuarios/crear">Si no tienes una cuenta registrate aquí</a>
+                                    <a href="/signin">Si no tienes una cuenta registrate aquí</a>
                                 </div>
                             </form>
                         </div>

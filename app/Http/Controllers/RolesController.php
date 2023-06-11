@@ -12,6 +12,7 @@ class RolesController extends Controller
     public function __construct(Roles $roles){
         $this->roles = $roles;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +21,7 @@ class RolesController extends Controller
     public function index()
     {
         $roles = $this->roles->getRoles();
-        return view('roles/roles.list', ['roles' => $roles]);
+        return view('roles.list', ['roles' => $roles]);
     }
 
     /**
@@ -30,7 +31,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return view('roles/roles.create');
+        return view('roles.create');
     }
 
     /**
@@ -43,7 +44,7 @@ class RolesController extends Controller
     {
         $roles = new Roles($request->all());
         $roles->save();
-        return redirect()->action([RolesController::class, 'index']);
+        return redirect()->action([RolesController::class, 'index'])->with('message', 'Created successfully.');
     }
 
     /**
@@ -66,7 +67,7 @@ class RolesController extends Controller
     public function edit($id)
     {
         $roles = $this->roles->getRoleById($id);
-        return view('roles/roles.edit', ['roles' => $roles]);
+        return view('roles.edit', ['roles' => $roles]);
     }
 
     /**
@@ -81,7 +82,7 @@ class RolesController extends Controller
         $roles = Roles::find($id);
         $roles->fill($request->all());
         $roles->save();
-        return redirect()->action([RolesController::class, 'index']);
+        return redirect()->action([RolesController::class, 'index'])->with('message', 'Updated successfully.');
     }
 
     /**
@@ -92,6 +93,10 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $roles = Roles::find($id);
+        if($roles->count() > 0){
+            Roles::where('id', $id)->update(array('estado' => 0));
+        }
+        return redirect()->action([RolesController::class, 'index'])->with('message', 'Deleted successfully.');
     }
 }

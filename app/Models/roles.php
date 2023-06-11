@@ -23,10 +23,17 @@ class Roles extends Model
     protected $hidden = ['id'];
 
     /**
-     * Method for retrieving all roles' list
+     * Method for retrieving all roles' paginated list
      */
     public function getRoles() {
-        return Roles::all();
+        return Roles::where('estado', 1)->paginate(5);
+    }
+
+    /**
+     * Method for retrieving all roles' no paginated list
+     */
+    public function getAllRoles() {
+        return Roles::where('estado', 1);
     }
 
     /**

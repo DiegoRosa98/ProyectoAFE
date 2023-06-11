@@ -70,6 +70,8 @@
                 if (!form.checkValidity()) {
                     event.preventDefault()
                     event.stopPropagation()
+                }else{
+                    alert('Registro con éxito, inicie sesión para continuar');
                 }
 
                 form.classList.add('was-validated')
