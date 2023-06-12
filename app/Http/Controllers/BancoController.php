@@ -21,7 +21,7 @@ class BancoController extends Controller
     public function index()
     {
         $bancos = $this->bancos->getBanks();
-        return view('banks/banks.list', ['bancos' => $bancos]);
+        return view('banks.list', ['bancos' => $bancos]);
     }
 
     /**
@@ -31,7 +31,7 @@ class BancoController extends Controller
      */
     public function create()
     {
-        return view('banks/banks.create');
+        return view('banks.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class BancoController extends Controller
     {
         $bancos = new Banco($request->all());
         $bancos->save();
-        return redirect()->action([BancoController::class, 'index']);
+        return redirect()->action([BancoController::class, 'index'])->with('message', 'Created successfully.');
     }
 
     /**
@@ -67,7 +67,7 @@ class BancoController extends Controller
     public function edit($id)
     {
         $bancos = $this->bancos->getBankById($id);
-        return view('banks/banks.edit', ['bancos' => $bancos]);
+        return view('banks.edit', ['bancos' => $bancos]);
     }
 
     /**
@@ -82,7 +82,7 @@ class BancoController extends Controller
         $bancos = Banco::find($id);
         $bancos->fill($request->all());
         $bancos->save();
-        return redirect()->action([BancoController::class, 'index']);
+        return redirect()->action([BancoController::class, 'index'])->with('message', 'Updated successfully.');
     }
 
     /**
@@ -93,6 +93,10 @@ class BancoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $usuarios = Banco::find($id);
+        if($usuarios->count() > 0){
+            Banco::where('id', $id)->update(array('estado' => 0));
+        }
+        return redirect()->action([BancoController::class, 'index'])->with('message', 'Deleted successfully.');
     }
 }

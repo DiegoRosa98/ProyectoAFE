@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cuentas;
+use App\Models\ViewCuentas;
 
 class CuentasController extends Controller
 {
     protected $cuentas;
+    protected $vcuentas;
 
-    public function __construct(Banco $cuentas){
+    public function __construct(Cuentas $cuentas, ViewCuentas $vcuentas){
         $this->cuentas = $cuentas;
+        $this->vcuentas = $vcuentas;
     }
 
     /**
@@ -20,8 +23,8 @@ class CuentasController extends Controller
      */
     public function index()
     {
-        $cuentas = $this->cuentas->getAccounts();
-        return view('accounts/accounts.list', ['cuentas' => $cuentas]);
+        $vcuentas = $this->vcuentas->getAccounts();
+        return view('accounts.list', ['cuentas' => $vcuentas]);
     }
 
     /**
@@ -31,7 +34,7 @@ class CuentasController extends Controller
      */
     public function create()
     {
-        return view('accounts/accounts.create');
+        return view('accounts.create');
     }
 
     /**
@@ -42,9 +45,10 @@ class CuentasController extends Controller
      */
     public function store(Request $request)
     {
+        echo($request);
         $cuentas = new Cuentas($request->all());
         $cuentas->save();
-        return redirect()->action([CuentasController::class, 'index']);
+        return redirect()->action([CuentasController::class, 'index'])->with('message', 'Created successfully.');
     }
 
     /**
@@ -66,8 +70,8 @@ class CuentasController extends Controller
      */
     public function edit($id)
     {
-        $cuentas = $this->cuentas->getAccountById($id);
-        return view('accounts/accounts.edit', ['cuentas' => $cuentas]);
+        $cuentas = $this->vcuentas->getAccountsById($id);
+        return view('accounts.edit', ['cuentas' => $cuentas]);
     }
 
     /**
@@ -82,7 +86,7 @@ class CuentasController extends Controller
         $cuentas = Cuentas::find($id);
         $cuentas->fill($request->all());
         $cuentas->save();
-        return redirect()->action([CuentasController::class, 'index']);
+        return redirect()->action([CuentasController::class, 'index'])->with('message', 'Updated successfully.');
     }
 
     /**
@@ -93,6 +97,10 @@ class CuentasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cuentas = Cuentas::find($id);
+        if($cuentas->count() > 0){
+            Cuentas::where('id', $id)->update(array('estado' => 0));
+        }
+        return redirect()->action([CuentasController::class, 'index'])->with('message', 'Deleted successfully.');
     }
 }

@@ -23,7 +23,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Gestión de Roles</title>
+        <title>Cuentas</title>
 
         <!-- sweetalert -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -124,7 +124,7 @@
         <div class="l-navbar" id="nav-bar">
             <nav class="nav">
                 <div>
-                    <a href="#" class="nav_logo">
+                    <a href="/" class="nav_logo">
                         <i class="bx bx-layer nav_logo-icon"></i>
                         <span class="nav_logo-name">Banco GSA-SIFE</span>
                     </a>
@@ -154,22 +154,36 @@
         <!-- end template -->
         <!--Container Main start-->
         <div class=" bg-light">
-            <h4 class="text-center">Configuración de Roles</h4>
+            <h4 class="text-center">Gestión de Cuentas</h4>
 
             <div class="d-flex justify-content-center mt-5">
                 <div class="card col-lg-6 col-sm-12">
                     <div class="card-body">
-                        <h5>Nuevo Registro</h5>
-                        <form class="needs-validation" novalidate action="/admin/roles/crear" method="POST">
+                        <h5>Actualizar Registro</h5>
+                        <form class="needs-validation row" novalidate action="/admin/cuentas/editar/{{$cuentas->id}}" method="POST">
                             @csrf
-                            <div class="form-group col-12">
-                                <label for="">Nombre:</label>
-                                <input type="text" class="form-control" name="nombre" required>
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <input type="hidden" name="estado" value="1">
+                            {{ method_field('PUT') }}
+                            <div class="form-group col-md-12 my-2">
+                                <label for="">No. Cuenta:</label>
+                                <input type="text" class="form-control" name="numeroCuenta" value="{{$cuentas->numeroCuenta}}" disabled>
                             </div>
+                            <div class="form-group col-md-12 my-2">
+                                <label for="">Usuario Propietario:</label>
+                                <input type="text" class="form-control" name="idUsuario" required value="{{$cuentas->idUsuario}}" disabled>
+                                <div class="invalid-feedback">
+                                    This field is invalid
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 my-2">
+                                <label for="">Tipo de Cuenta:</label>
+                                <input type="text" class="form-control" name="idTipoCuenta" required value="{{$cuentas->idTipoCuenta}}" disabled>
+                                <div class="invalid-feedback">
+                                    This field is invalid
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="idBanco" value="1">
+                            <input type="hidden" name="estado" value="1">
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">
                                     <i class="bx bx-x nav_icon" style="vertical-align: sub;"></i>Cancelar
@@ -189,7 +203,7 @@
             function cancelConfirm() {
                 Swal.fire({
                     title: '¡Advertencia!',
-                    text: '¿Está seguro de regresar?',
+                    text: '¿Está seguro de regresar? No se guardarán los cambios.',
                     icon: 'warning',
                     confirmButtonText: 'Sí',
                     showDenyButton: true,
@@ -197,7 +211,7 @@
 
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.replace('/admin/roles')
+                        window.location.replace('/admin/cuentas')
                     }
                 })
             }

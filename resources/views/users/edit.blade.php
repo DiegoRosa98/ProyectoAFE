@@ -7,7 +7,7 @@
     if($_SESSION){
         if($now>$_SESSION['EXPIRES'])
         {
-            return redirect()->to('/logout')->send();
+            return redirect()->to('/logout/1')->send();
         }
         if($_SESSION['ROL']!=1)
         {
@@ -154,32 +154,25 @@
         <!-- end template -->
         <!--Container Main start-->
         <div class=" bg-light">
-            <h4>Configuración de Roles</h4>
+            <h4 class="text-center">Administración de usuarios</h4>
 
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mt-5">
                 <div class="card col-6">
                     <div class="card-body">
                         <h5>Actualizar Registro</h5>
-                        <form class="needs-validation" novalidate action="/admin/roles/editar/{{$roles->id}}" method="POST">
+                        <form class="needs-validation row" novalidate action="/admin/usuarios/editar/{{$users->id}}" method="POST">
                             @csrf
                             {{ method_field('PUT') }}
-                            <div class="form-group col-lg-6 col-md-12 my-2">
+                            <div class="form-group col-md-12 my-2">
                                 <label for="">Nombre de usuario:</label>
-                                <input type="text" class="form-control" name="username" required>
+                                <input type="text" class="form-control" name="username" value="{{$users->username}}" disabled>
                                 <div class="invalid-feedback">
                                     This field is invalid
                                 </div>
                             </div>
                             <div class="form-group col-lg-6 col-md-12 my-2">
                                 <label for="">Correo:</label>
-                                <input type="email" class="form-control" name="correo" required>
-                                <div class="invalid-feedback">
-                                    This field is invalid
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6 col-md-12 my-2">
-                                <label for="">Contraseña Temporal:</label>
-                                <input type="password" class="form-control" name="clave" required>
+                                <input type="email" class="form-control" name="correo" required value="{{$users->correo}}">
                                 <div class="invalid-feedback">
                                     This field is invalid
                                 </div>
@@ -188,7 +181,7 @@
                                 <label for="">Rol:</label>
                                 <select class="form-select" name="idRol" required>
                                     <option value="1">Admin</option>
-                                    <option selected value="2">Client</option>
+                                    <option value="2">Client</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     This field is invalid
@@ -199,7 +192,7 @@
                             <input type="hidden" name="expires" value="">
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">
-                                    <i class="bx bx- nav_icon" style="vertical-align: sub;"></i>Cancelar
+                                    <i class="bx bx-x nav_icon" style="vertical-align: sub;"></i>Cancelar
                                 </button>
                                 <button type="submit" class="btn btn-outline-secondary btn-save mx-2">
                                     <i class="bx bx-save nav_icon" style="vertical-align: sub;"></i>Guardar
@@ -224,7 +217,7 @@
 
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.replace('/admin/roles')
+                        window.location.replace('/admin/usuarios')
                     }
                 })
             }

@@ -13,7 +13,6 @@
         {
             return redirect()->to('/home')->send();
         }
-        $usuario = $_SESSION['USER'];
     }else{
         return redirect()->to('/')->send();
     }
@@ -24,7 +23,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Administration Panel</title>
+        <title>Bancos</title>
 
         <!-- sweetalert -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -40,13 +39,26 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
         <!-- template style -->
         <style>
-            :root{--header-height: 3rem;--nav-width: 68px;--first-color: #528D7D;--first-color-light: #AFA5D9;--white-color: #F7F6FB;--body-font: 'Nunito', sans-serif;--normal-font-size: 1rem;--z-fixed: 100}*,::before,::after{box-sizing: border-box}body{position: relative;margin: var(--header-height) 0 0 0;padding: 0 1rem;font-family: var(--body-font);font-size: var(--normal-font-size);transition: .5s}a{text-decoration: none}.header{width: 100%;height: var(--header-height);position: fixed;top: 0;left: 0;display: flex;align-items: center;justify-content: space-between;padding: 0 1rem;background-color: var(--white-color);z-index: var(--z-fixed);transition: .5s}.header_toggle{color: var(--first-color);font-size: 1.5rem;cursor: pointer}.header_img{width: 35px;height: 35px;display: flex;justify-content: center;border-radius: 50%;overflow: hidden}.header_img img{width: 40px}.l-navbar{position: fixed;top: 0;left: -30%;width: var(--nav-width);height: 100vh;background-color: var(--first-color);padding: .5rem 1rem 0 0;transition: .5s;z-index: var(--z-fixed)}.nav{height: 100%;display: flex;flex-direction: column;justify-content: space-between;overflow: hidden}.nav_logo, .nav_link{display: grid;grid-template-columns: max-content max-content;align-items: center;column-gap: 1rem;padding: .5rem 0 .5rem 1.5rem}.nav_logo{margin-bottom: 2rem}.nav_logo-icon{font-size: 1.25rem;color: var(--white-color)}.nav_logo-name{color: var(--white-color);font-weight: 700}.nav_link{position: relative;color: var(--first-color-light);margin-bottom: 1.5rem;transition: .3s}.nav_link:hover{color: var(--white-color)}.nav_icon{font-size: 1.25rem}.show{left: 0}.body-pd{padding-left: calc(var(--nav-width) + 1rem)}.active{color: var(--white-color)}.active::before{content: '';position: absolute;left: 0;width: 2px;height: 32px;background-color: var(--white-color)}.height-100{height:100vh}@media screen and (min-width: 768px){body{margin: calc(var(--header-height) + 1rem) 0 0 0;padding-left: calc(var(--nav-width) + 2rem)}.header{height: calc(var(--header-height) + 1rem);padding: 0 2rem 0 calc(var(--nav-width) + 2rem)}.header_img{width: 40px;height: 40px}.header_img img{width: 45px}.l-navbar{left: 0;padding: 1rem 1rem 0 0}.show{width: calc(var(--nav-width) + 156px)}.body-pd{padding-left: calc(var(--nav-width) + 188px)}.dropdown-menu{background-color: #528D7D;}}
-            .card {
-                width: 240px;
-                height: 215px;
+            :root{--header-height: 3rem;--nav-width: 68px;--first-color: #528D7D;--first-color-light: #AFA5D9;--white-color: #F7F6FB;--body-font: 'Nunito', sans-serif;--normal-font-size: 1rem;--z-fixed: 100}*,::before,::after{box-sizing: border-box}body{position: relative;margin: var(--header-height) 0 0 0;padding: 0 1rem;font-family: var(--body-font);font-size: var(--normal-font-size);transition: .5s}a{text-decoration: none}.header{width: 100%;height: var(--header-height);position: fixed;top: 0;left: 0;display: flex;align-items: center;justify-content: space-between;padding: 0 1rem;background-color: var(--white-color);z-index: var(--z-fixed);transition: .5s}.header_toggle{color: var(--first-color);font-size: 1.5rem;cursor: pointer}.header_img{width: 35px;height: 35px;display: flex;justify-content: center;border-radius: 50%;overflow: hidden}.header_img img{width: 40px}.l-navbar{position: fixed;top: 0;left: -30%;width: var(--nav-width);height: 100vh;background-color: var(--first-color);padding: .5rem 1rem 0 0;transition: .5s;z-index: var(--z-fixed)}.nav{height: 100%;display: flex;flex-direction: column;justify-content: space-between;overflow: hidden}.nav_logo, .nav_link{display: grid;grid-template-columns: max-content max-content;align-items: center;column-gap: 1rem;padding: .5rem 0 .5rem 1.5rem}.nav_logo{margin-bottom: 2rem}.nav_logo-icon{font-size: 1.25rem;color: var(--white-color)}.nav_logo-name{color: var(--white-color);font-weight: 700}.nav_link{position: relative;color: var(--first-color-light);margin-bottom: 1.5rem;transition: .3s}.nav_link:hover{color: var(--white-color)}.nav_icon{font-size: 1.25rem}.show{left: 0}.body-pd{padding-left: calc(var(--nav-width) + 1rem)}.active{color: var(--white-color)}.active::before{content: '';position: absolute;left: 0;width: 2px;height: 32px;background-color: var(--white-color)}.height-100{height:100vh}@media screen and (min-width: 768px){body{margin: calc(var(--header-height) + 1rem) 0 0 0;padding-left: calc(var(--nav-width) + 2rem)}.header{height: calc(var(--header-height) + 1rem);padding: 0 2rem 0 calc(var(--nav-width) + 2rem)}.header_img{width: 40px;height: 40px}.header_img img{width: 45px}.l-navbar{left: 0;padding: 1rem 1rem 0 0}.show{width: calc(var(--nav-width) + 156px)}.body-pd{padding-left: calc(var(--nav-width) + 188px)}.page-link{color:#528D7D;}}
+            .btn-save{
+                background-color: #528D7D;
+                border-color: #528D7D;
+                color: white;
             }
-            .menu-i {
-                font-size: 36px;
+            .btn-save:hover{
+                background-color: white;
+                border-color: #528D7D;
+                color: #528D7D;
+            }
+            .btn-cancel{
+                background-color: #CA3838;
+                border-color: #CA3838;
+                color: white;
+            }
+            .btn-cancel:hover{
+                background-color: white;
+                border-color: #CA3838;
+                color: #CA3838;
             }
         </style>
         <!-- template script -->
@@ -93,6 +105,7 @@
         </script>
     </head>
     <body id="body-pd" style="background-color: #F7F6FB;">
+        <!-- template -->
         <header class="header" id="header">
             <div class="header_toggle">
                 <i class="bx bx-menu" id="header-toggle"></i>
@@ -105,22 +118,22 @@
                 </a>
                 <a href="#" class="">
                     <i class="bx bx-user nav_icon"></i>
-                    <?php echo($usuario) ?>
                 </a>
             </div>
         </header>
         <div class="l-navbar" id="nav-bar">
             <nav class="nav">
                 <div>
-                    <a href="#" class="nav_logo">
+                    <a href="/" class="nav_logo">
                         <i class="bx bx-layer nav_logo-icon"></i>
                         <span class="nav_logo-name">Banco GSA-SIFE</span>
                     </a>
                     <div class="nav_list">
-                        <a href="/" class="nav_link active">
+                        <a href="/" class="nav_link">
                             <i class="bx bxs-bank nav_icon"></i>
-                            <span class="nav_name">Menu</span>
+                            <span class="nav_name">Home</span>
                         </a>
+
                         <!-- <a href="#" class="nav_link">
                             <i class="bx bx-user nav_icon"></i>
                             <span class="nav_name">Perfil</span>
@@ -130,91 +143,54 @@
                             <span class="nav_name">Configuración</span>
                         </a> -->
 
-
                     </div>
                 </div>
-                <a role="button" onclick="logoutConfirm()" class="nav_link">
+                <!-- <a role="button" onclick="logoutConfirm()" class="nav_link">
                     <i class="bx bx-log-out nav_icon"></i>
                     <span class="nav_name">Log Out</span>
-                </a>
+                </a> -->
             </nav>
         </div>
+        <!-- end template -->
         <!--Container Main start-->
         <div class=" bg-light">
-            <h4 class="text-center">Administración Central</h4>
+            <h4 class="text-center">Gestión de Bancos</h4>
 
-            <div class="d-flex justify-content-center flex-wrap mx-2 my-3">
-                <a href="/admin/roles">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bxs-user-account nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Configuración de Roles</h5>
-                        </div>
+            <div class="d-flex justify-content-center mt-5">
+                <div class="card col-lg-6 col-sm-12">
+                    <div class="card-body">
+                        <h5>Actualizar Registro</h5>
+                        <form class="needs-validation row" novalidate action="/admin/bancos/editar/{{$bancos->id}}" method="POST">
+                            @csrf
+                            {{ method_field('PUT') }}
+                            <div class="form-group col-md-12 my-2">
+                                <label for="">Nombre de banco:</label>
+                                <input type="text" class="form-control" name="nombre" value="{{$bancos->nombre}}" >
+                                <div class="invalid-feedback">
+                                    This field is invalid
+                                </div>
+                            </div>
+                            <input type="hidden" name="estado" value="1">
+                            <div class="d-flex justify-content-center mt-3">
+                                <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">
+                                    <i class="bx bx-x nav_icon" style="vertical-align: sub;"></i>Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-outline-secondary btn-save mx-2">
+                                    <i class="bx bx-save nav_icon" style="vertical-align: sub;"></i>Guardar
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </a>
-
-                <a href="/admin/usuarios">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bxs-user-check nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Administración de Usuarios</h5>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="/admin/bancos">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bxs-bank nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Gestión de Bancos</h5>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="/admin/tipo-cuenta">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bx-abacus nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Configuración de Tipos de Cuentas</h5>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="/admin/cuentas">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bx-abacus nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Gestión de Cuentas</h5>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="/admin/tipo-servicios">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bx-album nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Configuración de Tipo de Servicios</h5>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="/admin/servicios">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bx-album nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Administración de Servicios</h5>
-                        </div>
-                    </div>
-                </a>
-
+                </div>
             </div>
         </div>
         <!--Container Main end-->
+
         <script>
-            function logoutConfirm() {
+            function cancelConfirm() {
                 Swal.fire({
                     title: '¡Advertencia!',
-                    text: '¿Está seguro de salir?',
+                    text: '¿Está seguro de regresar? No se guardarán los cambios.',
                     icon: 'warning',
                     confirmButtonText: 'Sí',
                     showDenyButton: true,
@@ -222,10 +198,28 @@
 
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.replace('/logout/0')
+                        window.location.replace('/admin/bancos')
                     }
                 })
             }
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
         </script>
     </body>
 </html>

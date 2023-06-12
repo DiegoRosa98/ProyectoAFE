@@ -50,7 +50,7 @@ class Usuarios extends Model
             /////////////////////GENERAR TOKEN//////////////////////
             date_default_timezone_set('America/El_Salvador');
             $token = bin2hex(random_bytes(50));
-            $expiracion = date('Y-m-d H:i:s', strtotime('+900 seconds'));
+            $expiracion = date('Y-m-d H:i:s', strtotime('+3600 seconds'));
             Usuarios::where('id', $_SESSION['ID'])->update(array('token' => $token, 'expires' => $expiracion));
             $_SESSION['EXPIRES']=$expiracion;
             if($usuario->first()->idRol === 1){

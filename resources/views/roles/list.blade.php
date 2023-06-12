@@ -7,7 +7,7 @@
     if($_SESSION){
         if($now>$_SESSION['EXPIRES'])
         {
-            return redirect()->to('/logout')->send();
+            return redirect()->to('/logout/1')->send();
         }
         if($_SESSION['ROL']!=1)
         {
@@ -155,7 +155,7 @@
 
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.replace('/logout')
+                        window.location.replace('/logout/0')
                     }
                 })
             }
@@ -219,7 +219,7 @@
         <!-- end template -->
         <!--Container Main start-->
         <div class=" bg-light">
-            <h4>Configuración de Roles</h4>
+            <h4 class="text-center">Configuración de Roles</h4>
             <div class="d-flex justify-content-between my-3 mx-3">
                 <a href="/admin" class="btn btn-outline-secondary btn-back mx-2">
                     <i class="bx bx-arrow-back nav_icon" style="vertical-align: sub;"></i>Regresar
@@ -252,9 +252,11 @@
                                     <a class="btn btn-outline-primary btn-edit" href="/admin/roles/editar/{{$rol->id}}">
                                         <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
                                     </a>
+                                    @if($rol->id > 2)
                                     <a class="btn btn-outline-danger btn-del" role="button" onclick="deleteConfirm('{{$rol->id}}')">
                                         <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
                                     </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
