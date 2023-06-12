@@ -23,10 +23,17 @@ class TipoCuenta extends Model
     protected $hidden = ['id'];
 
     /**
-     * Method for retrieving all AccountTypes' list
+     * Method for retrieving all AccountTypes' no paginated list
+     */
+    public function getAllAccountType() {
+        return TipoCuenta::all();
+    }
+
+    /**
+     * Method for retrieving all AccountTypes' paginated list
      */
     public function getAccountType() {
-        return TipoCuenta::all();
+        return TipoCuenta::where('estado', 1)->paginate(5);
     }
 
     /**

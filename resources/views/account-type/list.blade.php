@@ -23,7 +23,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Gestión de Roles</title>
+        <title>Tipos de Cuenta</title>
 
         <!-- sweetalert -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -40,25 +40,47 @@
         <!-- template style -->
         <style>
             :root{--header-height: 3rem;--nav-width: 68px;--first-color: #528D7D;--first-color-light: #AFA5D9;--white-color: #F7F6FB;--body-font: 'Nunito', sans-serif;--normal-font-size: 1rem;--z-fixed: 100}*,::before,::after{box-sizing: border-box}body{position: relative;margin: var(--header-height) 0 0 0;padding: 0 1rem;font-family: var(--body-font);font-size: var(--normal-font-size);transition: .5s}a{text-decoration: none}.header{width: 100%;height: var(--header-height);position: fixed;top: 0;left: 0;display: flex;align-items: center;justify-content: space-between;padding: 0 1rem;background-color: var(--white-color);z-index: var(--z-fixed);transition: .5s}.header_toggle{color: var(--first-color);font-size: 1.5rem;cursor: pointer}.header_img{width: 35px;height: 35px;display: flex;justify-content: center;border-radius: 50%;overflow: hidden}.header_img img{width: 40px}.l-navbar{position: fixed;top: 0;left: -30%;width: var(--nav-width);height: 100vh;background-color: var(--first-color);padding: .5rem 1rem 0 0;transition: .5s;z-index: var(--z-fixed)}.nav{height: 100%;display: flex;flex-direction: column;justify-content: space-between;overflow: hidden}.nav_logo, .nav_link{display: grid;grid-template-columns: max-content max-content;align-items: center;column-gap: 1rem;padding: .5rem 0 .5rem 1.5rem}.nav_logo{margin-bottom: 2rem}.nav_logo-icon{font-size: 1.25rem;color: var(--white-color)}.nav_logo-name{color: var(--white-color);font-weight: 700}.nav_link{position: relative;color: var(--first-color-light);margin-bottom: 1.5rem;transition: .3s}.nav_link:hover{color: var(--white-color)}.nav_icon{font-size: 1.25rem}.show{left: 0}.body-pd{padding-left: calc(var(--nav-width) + 1rem)}.active{color: var(--white-color)}.active::before{content: '';position: absolute;left: 0;width: 2px;height: 32px;background-color: var(--white-color)}.height-100{height:100vh}@media screen and (min-width: 768px){body{margin: calc(var(--header-height) + 1rem) 0 0 0;padding-left: calc(var(--nav-width) + 2rem)}.header{height: calc(var(--header-height) + 1rem);padding: 0 2rem 0 calc(var(--nav-width) + 2rem)}.header_img{width: 40px;height: 40px}.header_img img{width: 45px}.l-navbar{left: 0;padding: 1rem 1rem 0 0}.show{width: calc(var(--nav-width) + 156px)}.body-pd{padding-left: calc(var(--nav-width) + 188px)}.page-link{color:#528D7D;}}
-            .btn-save{
+            .btn-add{
                 background-color: #528D7D;
                 border-color: #528D7D;
                 color: white;
             }
-            .btn-save:hover{
+            .btn-add:hover{
                 background-color: white;
                 border-color: #528D7D;
                 color: #528D7D;
+                font-weight: 700;
             }
-            .btn-cancel{
-                background-color: #CA3838;
-                border-color: #CA3838;
+            .btn-back{
+                background-color: #4E86B9;
+                border-color: #4E86B9;
                 color: white;
             }
-            .btn-cancel:hover{
+            .btn-back:hover{
+                background-color: white;
+                border-color: #4E86B9;
+                color: #4E86B9;
+                font-weight: 700;
+            }
+            .btn-edit{
+                background-color: white;
+                border-color: #4E86B9;
+                color: #4E86B9;
+            }
+            .btn-edit:hover{
+                background-color: #4E86B9;
+                border-color: #4E86B9;
+                color: white;
+            }
+            .btn-del{
                 background-color: white;
                 border-color: #CA3838;
                 color: #CA3838;
+            }
+            .btn-del:hover{
+                background-color: #CA3838;
+                border-color: #CA3838;
+                color: white;
             }
         </style>
         <!-- template script -->
@@ -121,6 +143,49 @@
                 </a>
             </div>
         </header>
+        <script>
+            function logoutConfirm() {
+                Swal.fire({
+                    title: '¡Advertencia!',
+                    text: '¿Está seguro de salir?',
+                    icon: 'warning',
+                    confirmButtonText: 'Sí',
+                    showDenyButton: true,
+                    denyButtonText: 'No',
+
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        window.location.replace('/logout/0')
+                    }
+                })
+            }
+            function deleteConfirm($id) {
+                Swal.fire({
+                    title: '¡Advertencia!',
+                    text: '¿Está seguro de eliminar el registro?',
+                    icon: 'warning',
+                    confirmButtonText: 'Sí',
+                    showDenyButton: true,
+                    denyButtonText: 'No',
+
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        window.location.replace('/admin/tipo-cuenta/eliminar/'+$id)
+                    }
+                })
+            }
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+        </script>
         <div class="l-navbar" id="nav-bar">
             <nav class="nav">
                 <div>
@@ -145,80 +210,71 @@
 
                     </div>
                 </div>
-                <!-- <a role="button" onclick="logoutConfirm()" class="nav_link">
+                <a role="button" onclick="logoutConfirm()" class="nav_link">
                     <i class="bx bx-log-out nav_icon"></i>
                     <span class="nav_name">Log Out</span>
-                </a> -->
+                </a>
             </nav>
         </div>
         <!-- end template -->
         <!--Container Main start-->
         <div class=" bg-light">
-            <h4 class="text-center">Configuración de Roles</h4>
+            <h4 class="text-center">Configuración de Tipos de Cuentas</h4>
+            <div class="d-flex justify-content-between my-3 mx-3">
+                <a href="/admin" class="btn btn-outline-secondary btn-back mx-2">
+                    <i class="bx bx-arrow-back nav_icon" style="vertical-align: sub;"></i>Regresar
+                </a>
+                <a href="/admin/tipo-cuenta/crear" class="btn btn-outline-secondary btn-add" >
+                    <i class="bx bx-plus nav_icon" style="vertical-align: sub;"></i>Nuevo Banco
+                </a>
+            </div>
 
-            <div class="d-flex justify-content-center mt-5">
-                <div class="card col-lg-6 col-sm-12">
-                    <div class="card-body">
-                        <h5>Nuevo Registro</h5>
-                        <form class="needs-validation" novalidate action="/admin/roles/crear" method="POST">
-                            @csrf
-                            <div class="form-group col-12">
-                                <label for="">Nombre:</label>
-                                <input type="text" class="form-control" name="nombre" required>
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <input type="hidden" name="estado" value="1">
-                            </div>
-                            <div class="d-flex justify-content-center mt-3">
-                                <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">
-                                    <i class="bx bx-x nav_icon" style="vertical-align: sub;"></i>Cancelar
-                                </button>
-                                <button type="submit" class="btn btn-outline-secondary btn-save mx-2">
-                                    <i class="bx bx-save nav_icon" style="vertical-align: sub;"></i>Guardar
-                                </button>
-                            </div>
-                        </form>
+            <!-- data list -->
+            <div class="mx-3">
+                @if(session("message"))
+                    <script>
+                        Toast.fire({
+                            icon: 'success',
+                            title: '{{session("message")}}'
+                        });
+                    </script>
+                @endif
+                @if($tipoCuenta->count() == 0)
+                    <div class="card col-12 m-2">
+                        <div class="card-body">
+                            <h5 class="text-center fw-bolder">No hay registros</h5>
+                        </div>
                     </div>
+                @endif
+                @foreach ($tipoCuenta as $tipo)
+                    <div class="card col-12 m-2">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="fw-bolder">{{ $tipo->nombre }}</h5>
+                                    <h6>Fecha creación: {{ $tipo->created_at }}</h6>
+                                    <h6>Última modificación: {{ $tipo->updated_at }}</h6>
+                                </div>
+                                <div>
+                                    <a class="btn btn-outline-primary btn-edit" href="/admin/tipo-cuenta/editar/{{$tipo->id}}">
+                                        <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
+                                    </a>
+                                    <a class="btn btn-outline-danger btn-del" role="button" onclick="deleteConfirm('{{$tipo->id}}')">
+                                        <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                <div class="">
+                    {{ $tipoCuenta->links('vendor.pagination.bootstrap-4') }}
                 </div>
             </div>
+            <!-- data list -->
         </div>
         <!--Container Main end-->
 
-        <script>
-            function cancelConfirm() {
-                Swal.fire({
-                    title: '¡Advertencia!',
-                    text: '¿Está seguro de regresar?',
-                    icon: 'warning',
-                    confirmButtonText: 'Sí',
-                    showDenyButton: true,
-                    denyButtonText: 'No',
-
-                }).then((result) => {
-                    if(result.isConfirmed) {
-                        window.location.replace('/admin/roles')
-                    }
-                })
-            }
-            (() => {
-                'use strict'
-
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                const forms = document.querySelectorAll('.needs-validation')
-
-                // Loop over them and prevent submission
-                Array.from(forms).forEach(form => {
-                    form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                    }, false)
-                })
-            })()
-        </script>
     </body>
 </html>

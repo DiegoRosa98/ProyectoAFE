@@ -20,7 +20,7 @@ class TipoCuentaController extends Controller
     public function index()
     {
         $tipoCuenta = $this->tipoCuenta->getAccountType();
-        return view('account-type/account-type.list', ['tipoCuenta' => $tipoCuenta]);
+        return view('account-type.list', ['tipoCuenta' => $tipoCuenta]);
     }
 
     /**
@@ -30,7 +30,7 @@ class TipoCuentaController extends Controller
      */
     public function create()
     {
-        return view('account-type/account-type.create');
+        return view('account-type.create');
     }
 
     /**
@@ -43,7 +43,7 @@ class TipoCuentaController extends Controller
     {
         $tipoCuenta = new TipoCuenta($request->all());
         $tipoCuenta->save();
-        return redirect()->action([TipoCuentaController::class, 'index']);
+        return redirect()->action([TipoCuentaController::class, 'index'])->with('message', 'Created successfully.');
     }
 
     /**
@@ -66,7 +66,7 @@ class TipoCuentaController extends Controller
     public function edit($id)
     {
         $tipoCuenta = $this->tipoCuenta->getAccountTypeById($id);
-        return view('account-type/account-type.edit', ['tipoCuenta' => $tipoCuenta]);
+        return view('account-type.edit', ['tipoCuenta' => $tipoCuenta]);
     }
 
     /**
@@ -81,7 +81,7 @@ class TipoCuentaController extends Controller
         $tipoCuenta = TipoCuenta::find($id);
         $tipoCuenta->fill($request->all());
         $tipoCuenta->save();
-        return redirect()->action([TipoCuentaController::class, 'index']);
+        return redirect()->action([TipoCuentaController::class, 'index'])->with('message', 'Updated successfully.');
     }
 
     /**
@@ -92,6 +92,10 @@ class TipoCuentaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cuentas = TipoCuenta::find($id);
+        if($cuentas->count() > 0){
+            TipoCuenta::where('id', $id)->update(array('estado' => 0));
+        }
+        return redirect()->action([TipoCuentaController::class, 'index'])->with('message', 'Deleted successfully.');
     }
 }

@@ -7,7 +7,7 @@
     if($_SESSION){
         if($now>$_SESSION['EXPIRES'])
         {
-            return redirect()->to('/logout')->send();
+            return redirect()->to('/logout/1')->send();
         }
         if($_SESSION['ROL']!=1)
         {
@@ -154,10 +154,10 @@
         <!-- end template -->
         <!--Container Main start-->
         <div class=" bg-light">
-            <h4>Configuración de Roles</h4>
+            <h4 class="text-center">Configuración de Roles</h4>
 
-            <div class="d-flex justify-content-center">
-                <div class="card col-6">
+            <div class="d-flex justify-content-center mt-5">
+                <div class="card col-lg-6 col-sm-12">
                     <div class="card-body">
                         <h5>Actualizar Registro</h5>
                         <form class="needs-validation" novalidate action="/admin/roles/editar/{{$roles->id}}" method="POST">
