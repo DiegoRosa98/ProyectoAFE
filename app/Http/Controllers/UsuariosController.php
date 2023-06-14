@@ -58,7 +58,7 @@ class UsuariosController extends Controller
         $usuario = new Usuarios($request->all());
         $usuario->clave = hash('sha256', $request->post('clave'));
         $usuario->save();
-        return redirect()->action([UsuariosController::class, 'index']);
+        return redirect()->action([UsuariosController::class, 'index'])->with('message', 'Created successfully.');
     }
 
     /**
@@ -94,8 +94,9 @@ class UsuariosController extends Controller
     public function update(Request $request, $id)
     {
         $usuarios = Usuarios::find($id);
-        $usuarios->fill($request->all());
-        $usuarios->save();
+        if($usuarios->count() > 0){
+            Usuarios::where('id', $id)->update(array('correo' => $request->correo, 'idRol' => $request->idRol));
+        }
         return redirect()->action([UsuariosController::class, 'index'])->with('message', 'Updated successfully.');
     }
 
@@ -128,15 +129,17 @@ class UsuariosController extends Controller
             return redirect('/home')->with('respuesta', $usuarios);
         }else
         {
-            return redirect()->action([UsuariosController::class, 'index']);
+            return redirect('/')->with('message', 'Invalid user credentials');
         }
 
     }
 
     //Cerrar sesión
-    public function logout()
+    public function logout($type)
     {
+        $expired = 'Session has expired';
+        $closed = 'Session closed';
         $this->usuarios->logout();
-        return redirect('/');
+        return redirect('/')->with('message', $type == 1 ? $expired : $closed);
     }
 }

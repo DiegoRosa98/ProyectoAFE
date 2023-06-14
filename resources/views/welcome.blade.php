@@ -24,6 +24,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Banco GSA-SIFE</title>
 
+        <!-- sweetalert -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <!-- bootstrap css cdn link -->
@@ -32,11 +34,32 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
 
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+        </script>
     </head>
     <body class="body d-flex justify-content-center align-items-center">
         <div class="container">
             <div class="card">
                 <div class="card-body">
+                @if(session("message"))
+                    <script>
+                        Toast.fire({
+                            icon: 'info',
+                            title: '{{session("message")}}'
+                        });
+                    </script>
+                @endif
                     <h2 class="card-title fw-semibold mb-3">The code where things begin...</h2>
                     <div class="row">
                         <div class="col-md-5 col-sm-12 col-lg-4 d-flex align-items-center justify-content-center">

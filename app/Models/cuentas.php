@@ -15,7 +15,7 @@ class Cuentas extends Model
      * The attributes that are mass assignable.
      * @var array<int, string>
      */
-    protected $fillable = ['numeroCuenta', 'idUsuario', 'idTipoCuenta', 'idBanco', 'estado', 'created_at', 'updated_at'];
+    protected $fillable = ['idUsuario', 'idTipoCuenta', 'idBanco', 'numeroCuenta', 'estado', 'created_at', 'updated_at'];
     /**
      * The attributes that should be hidden for serialization.
      * @var array<int, string>
@@ -26,13 +26,13 @@ class Cuentas extends Model
      * Method for retrieving all Accounts' list
      */
     public function getAccounts() {
-        return Cuentas::all();
+        return ViewCuentas::where('estado', 1);
     }
 
     /**
      * Method for retrieving an especific Account
      */
     public function getAccountsById($id) {
-        return Cuentas::find($id);
+        return ViewCuentas::find($id);
     }
 }

@@ -7,7 +7,7 @@
     if($_SESSION){
         if($now>$_SESSION['EXPIRES'])
         {
-            return redirect()->to('/logout')->send();
+            return redirect()->to('/logout/1')->send();
         }
         if($_SESSION['ROL']!=1)
         {
@@ -141,7 +141,7 @@
         </div>
         <!--Container Main start-->
         <div class=" bg-light">
-            <h4>Administración Central</h4>
+            <h4 class="text-center">Administración Central</h4>
 
             <div class="d-flex justify-content-center flex-wrap mx-2 my-3">
                 <a href="/admin/roles">
@@ -171,7 +171,7 @@
                     </div>
                 </a>
 
-                <a href="/admin/tipo-cuentas">
+                <a href="/admin/tipo-cuenta">
                     <div class="card m-1">
                         <div class="card-body d-flex align-items-center">
                             <i class="bx bx-abacus nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
@@ -222,7 +222,7 @@
 
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.replace('/logout')
+                        window.location.replace('/logout/0')
                     }
                 })
             }

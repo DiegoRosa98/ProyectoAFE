@@ -26,7 +26,7 @@ class Banco extends Model
      * Method for retrieving all banks' list
      */
     public function getBanks() {
-        return Banco::all();
+        return Banco::where('estado', 1)->paginate(5);
     }
 
     /**

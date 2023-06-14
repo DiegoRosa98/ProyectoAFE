@@ -6,6 +6,9 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PerfilesController;
 
+use App\Http\Controllers\BancoController;
+use App\Http\Controllers\CuentasController;
+use App\Http\Controllers\TipoCuentaController;
 
 // --------------------- Public routes --------------------------------- //
 Route::get('/', function () {
@@ -14,7 +17,7 @@ Route::get('/', function () {
 /* user routes */
 Route::get('/signin', [UsuariosController::class, 'signin']);
 Route::post('/login', [UsuariosController::class, 'login']);
-Route::get('/logout', [UsuariosController::class, 'logout']);
+Route::get('/logout/{type}', [UsuariosController::class, 'logout']);
 
 Route::get('/respuesta', function () {
     return view('respuesta');
@@ -45,3 +48,24 @@ Route::post('/admin/usuarios/crear', [UsuariosController::class, 'store']);
 Route::get('/admin/usuarios/editar/{id}', [UsuariosController::class, 'edit']);
 Route::put('/admin/usuarios/editar/{id}', [UsuariosController::class, 'update']);
 Route::get('/admin/usuarios/eliminar/{id}', [UsuariosController::class, 'destroy']);
+/* banks admin routes */
+Route::get('/admin/bancos', [BancoController::class, 'index']);
+Route::get('/admin/bancos/crear', [BancoController::class, 'create']);
+Route::post('/admin/bancos/crear', [BancoController::class, 'store']);
+Route::get('/admin/bancos/editar/{id}', [BancoController::class, 'edit']);
+Route::put('/admin/bancos/editar/{id}', [BancoController::class, 'update']);
+Route::get('/admin/bancos/eliminar/{id}', [BancoController::class, 'destroy']);
+/* account types admin routes */
+Route::get('/admin/tipo-cuenta', [TipoCuentaController::class, 'index']);
+Route::get('/admin/tipo-cuenta/crear', [TipoCuentaController::class, 'create']);
+Route::post('/admin/tipo-cuenta/crear', [TipoCuentaController::class, 'store']);
+Route::get('/admin/tipo-cuenta/editar/{id}', [TipoCuentaController::class, 'edit']);
+Route::put('/admin/tipo-cuenta/editar/{id}', [TipoCuentaController::class, 'update']);
+Route::get('/admin/tipo-cuenta/eliminar/{id}', [TipoCuentaController::class, 'destroy']);
+/* accounts admin routes */
+Route::get('/admin/cuentas', [CuentasController::class, 'index']);
+Route::get('/admin/cuentas/crear', [CuentasController::class, 'create']);
+Route::post('/admin/cuentas/crear', [CuentasController::class, 'store']);
+Route::get('/admin/cuentas/editar/{id}', [CuentasController::class, 'edit']);
+Route::put('/admin/cuentas/editar/{id}', [CuentasController::class, 'update']);
+Route::get('/admin/cuentas/eliminar/{id}', [CuentasController::class, 'destroy']);
