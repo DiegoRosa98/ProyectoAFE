@@ -33,6 +33,24 @@ class PerfilesController extends Controller
         return view('profiles/profiles.create');
     }
 
+    public function guardar(Request $request)
+    {
+        $id = $request->post('id');
+        if($id != "" && $id != 0 && $id != null && $id != false)
+        {
+            $perfiles = Perfiles::find($id);
+            $perfiles->fill($request->all());
+            $perfiles->save();
+            return redirect()->action([PerfilesController::class, 'show']);
+        }
+        else
+        {
+            $perfiles = new Perfiles($request->all());
+            $perfiles->save();
+            return redirect()->action([PerfilesController::class, 'show']);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -52,9 +70,13 @@ class PerfilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $perfil = $this->perfiles->where('idUsuario', $_SESSION['ID'])->first();
+        return view('/perfil', ['perfil' => $perfil]);
     }
 
     /**

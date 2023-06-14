@@ -22,6 +22,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Your Account</title>
 
+        <!-- sweetalert -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
         <!-- bootstrap css cdn link -->
@@ -99,23 +101,27 @@
         <div class="l-navbar" id="nav-bar">
             <nav class="nav">
                 <div>
-                    <a href="#" class="nav_logo">
+                    <a href="/" class="nav_logo">
                         <i class="bx bx-layer nav_logo-icon"></i>
                         <span class="nav_logo-name">Banco GSA-SIFE</span>
                     </a>
                     <div class="nav_list">
-                        <a href="#" class="nav_link active">
+                        <a href="/cuentas" class="nav_link active">
                             <i class="bx bxs-bank nav_icon"></i>
                             <span class="nav_name">Cuenta</span>
                         </a>
-                        <!-- <a href="#" class="nav_link">
+                        <a href="/perfil" class="nav_link">
                             <i class="bx bx-user nav_icon"></i>
                             <span class="nav_name">Perfil</span>
                         </a>
-                        <a href="#" class="nav_link">
-                            <i class="bx bxs-chevrons-right nav_icon"></i>
+                        <a href="/transferencias" class="nav_link">
+                            <i class='bx bx-transfer nav_icon'></i>
                             <span class="nav_name">Transferencias</span>
-                        </a> -->
+                        </a>
+                        <a href="/servicios" class="nav_link">
+                            <i class='bx bx-dollar-circle nav_icon'></i>
+                            <span class="nav_name">Pago de Servicios</span>
+                        </a>
                         <!-- <a href="#" class="nav_link">
                             <i class="bx bx-message-square-detail nav_icon"></i>
                             <span class="nav_name">Messages</span>
@@ -131,7 +137,7 @@
 
                     </div>
                 </div>
-                <a href="/logout" class="nav_link">
+                <a role="button" onclick="logoutConfirm()" class="nav_link">
                     <i class="bx bx-log-out nav_icon"></i>
                     <span class="nav_name">Log Out</span>
                 </a>
@@ -181,6 +187,74 @@
                 </div>
             </div>
         </div>
+        <br>
+        <div class=" bg-light">
+            <h4>Transacciones</h4>
+
+            <div class="d-flex flex-wrap mx-2 my-3">
+                <a href="/transferencias">
+                    <div class="card m-1">
+                        <div class="card-body d-flex align-items-center">
+                            <i class="bx bx-transfer nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
+                            <h5 class="text-center">Transferir</h5>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/servicios">
+                    <div class="card m-1">
+                        <div class="card-body d-flex align-items-center">
+                            <i class="bx bx-dollar-circle nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
+                            <h5 class="text-center">Pago de servicios</h5>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+        <br>
+        <div class=" bg-light">
+            <h4>Ajustes</h4>
+
+            <div class="d-flex flex-wrap mx-2 my-3">
+
+                <a href="/perfil">
+                    <div class="card m-1">
+                        <div class="card-body d-flex align-items-center">
+                            <i class="bx bx-user nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
+                            <h5 class="text-center">Administrar perfil</h5>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/cuentas">
+                    <div class="card m-1">
+                        <div class="card-body d-flex align-items-center">
+                            <i class="bx bxs-bank nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
+                            <h5 class="text-center">Administrar cuentas</h5>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
         <!--Container Main end-->
+        <script>
+            function logoutConfirm() {
+                Swal.fire({
+                    title: '¡Advertencia!',
+                    text: '¿Está seguro de salir?',
+                    icon: 'warning',
+                    confirmButtonText: 'Sí',
+                    showDenyButton: true,
+                    denyButtonText: 'No',
+
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        window.location.replace('/logout')
+                    }
+                })
+            }
+        </script>
     </body>
 </html>

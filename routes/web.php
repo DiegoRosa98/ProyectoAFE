@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\PerfilesController;
+
 
 // --------------------- Public routes --------------------------------- //
 Route::get('/', function () {
@@ -20,6 +22,10 @@ Route::get('/respuesta', function () {
 Route::get('/home', function () {
     return view('home-client');
 });
+
+// ----------------- cliente routes ----------------------------------------- //
+Route::get('/perfil', [PerfilesController::class, 'show']);
+Route::post('/perfil/guardar', [PerfilesController::class, 'guardar']);
 
 // ----------------- admin routes ----------------------------------------- //
 Route::get('/admin', function () {
