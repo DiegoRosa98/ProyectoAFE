@@ -4,14 +4,16 @@
         session_start();
     }
     $now = date('Y-m-d H:i:s');
-    $usuario = $_SESSION['USER'];
-    if($now>$_SESSION['EXPIRES'])
-    {
-        return redirect()->to('/logout')->send();
-    }
-    if($_SESSION['ROL']!=2)
-    {
-        return redirect()->to('/admin')->send();
+    if($_SESSION){
+        $usuario = $_SESSION['USER'];
+        if($now>$_SESSION['EXPIRES'])
+        {
+            return redirect()->to('/logout')->send();
+        }
+        if($_SESSION['ROL']!=2)
+        {
+            return redirect()->to('/admin')->send();
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -145,28 +147,35 @@
         </div>
         <!--Container Main start-->
         <div class=" bg-light">
-            <h4>Mi Cuenta</h4>
+            <h4>Mis Cuentas</h4>
 
+
+            @if($data->cuenta->count() == 0)
+            <div class="card my-3">
+                <div class="card-body">
+                    <h6>Usted no posee cuentas activas.</h6>
+                </div>
+            </div>
+            @endif
+            @foreach ($data as $cuenta)
             <div class="card my-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex">
                             <i class="bx bxs-bank nav_icon mx-1"></i>
-                            <h5>Cuenta de ahorro</h5>
+                            <h5>Cuenta {{$c->tipoCuenta}}</h5>
                         </div>
-                        <a href="#">
-                            <i class="bx bx-chevron-right nav_icon mx-1"></i>
-                        </a>
                     </div>
-                    <h6><?php echo($usuario) ?></h6>
+                    <h6>Propietario: <?php echo($usuario) ?></h6>
                     <div class="d-flex justify-content-between">
-                        <label for="">No. 04556045</label>
-                        <label for="" class="fw-bolder">$1050.60</label>
+                        <label for="">No. {{$c->numeroCuenta}}</label>
+                        <label for="" class="fw-bolder">$ {{$c->monto}}</label>
                     </div>
                 </div>
             </div>
+            @endforeach
 
-            <div class="card my-3">
+            <!-- <div class="card my-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex">
@@ -185,7 +194,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <br>
         <div class=" bg-light">
@@ -251,7 +260,7 @@
 
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.replace('/logout')
+                        window.location.replace('/logout/0')
                     }
                 })
             }

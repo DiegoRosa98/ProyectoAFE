@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
+use App\Models\ViewCuentas;
 
 class UsuariosController extends Controller
 {
 
     protected $usuarios;
+    protected $cuentas;
+    protected $tarjetas;
 
-    public function __construct(Usuarios $usuarios)
+    public function __construct(Usuarios $usuarios, ViewCuentas $cuenta, TarjetaCuenta $tarjetas)
     {
         $this->usuarios = $usuarios;
+        $this->cuentas = $cuenta;
+        $this->tarjetas = $tarjetas;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -25,6 +29,12 @@ class UsuariosController extends Controller
     {
         $usuarios = $this->usuarios->getUsers();
         return view('users.list', ['users' => $usuarios]);
+    }
+
+    public function client()
+    {
+        $cuenta = $this->cuentas->getAccountByUser();
+        return view('home-client', ['cuenta' => $cuenta]);
     }
 
     /**

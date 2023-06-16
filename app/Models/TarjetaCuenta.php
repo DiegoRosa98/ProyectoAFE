@@ -32,7 +32,11 @@ class TarjetaCuenta extends Model
     /**
      * Method for retrieving an especific Card
      */
-    public function getCardById($id) {
-        return TarjetaCuenta::find($id);
+    public function getCardById() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $idUser = $_SESSION['ID'];
+        return TarjetaCuenta::where('idUsuario', $idUser)->get();
     }
 }

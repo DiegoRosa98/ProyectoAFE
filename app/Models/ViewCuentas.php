@@ -15,7 +15,7 @@ class ViewCuentas extends Model
      * The attributes that are mass assignable.
      * @var array<int, string>
      */
-    protected $fillable = ['numeroCuenta', 'idUsuario', 'username', 'idTipoCuenta', 'tipoCuenta', 'idBanco', 'banco', 'estado', 'created_at', 'updated_at'];
+    protected $fillable = ['numeroCuenta', 'monto', 'idUsuario', 'username', 'idTipoCuenta', 'tipoCuenta', 'estado', 'created_at', 'updated_at'];
     /**
      * The attributes that should be hidden for serialization.
      * @var array<int, string>
@@ -34,5 +34,13 @@ class ViewCuentas extends Model
      */
     public function getAccountsById($id) {
         return ViewCuentas::find($id);
+    }
+
+    public function getAccountByUser(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $idUser = $_SESSION['ID'];
+        return ViewCuentas::where('idUsuario', $idUser)->get();
     }
 }

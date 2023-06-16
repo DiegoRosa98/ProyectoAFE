@@ -182,7 +182,6 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" name="idBanco" value="1">
                             <input type="hidden" name="estado" value="1">
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">

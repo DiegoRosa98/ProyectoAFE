@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Registrate</title>
+
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- bootstrap css cdn link -->
@@ -23,7 +26,7 @@
                         <i class="bx bx-arrow-back nav_icon"></i> Regresar
                     </a>
                 </div>
-                <form class="needs-validation" action="/usuarios/crear" method="POST" novalidate>
+                <form class="needs-validation" action="/admin/usuarios/crear" method="POST" novalidate>
                     @csrf
                     <div class="form-group my-3">
                         <label for="username" class="form-label fw-bolder">Correo:</label>
@@ -51,7 +54,7 @@
                     <input type="hidden" name="estado" id="estado" value="1">
 
                     <div class="col-12 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-outline-secondary fw-semibold">Enviar</button>
+                        <button type="submit" class="btn btn-outline-secondary fw-semibold btn-add">Enviar</button>
                     </div>
                 </form>
             </div>
@@ -71,7 +74,12 @@
                     event.preventDefault()
                     event.stopPropagation()
                 }else{
-                    alert('Registro con éxito, inicie sesión para continuar');
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Se ha registrado exitosamente.',
+                        icon: 'success',
+                        confirmButtonText: 'Continuar',
+                    })
                 }
 
                 form.classList.add('was-validated')
@@ -94,6 +102,17 @@
         .btn:hover {
             background-color: #528D7D;
             color: white;
+            border-color: #528D7D;
+        }
+
+        .btn-add {
+            background-color: #528D7D;
+            border-color: #528D7D;
+            color: white;
+        }
+        .btn-add:hover {
+            background-color: white;
+            color: #528D7D;
             border-color: #528D7D;
         }
 

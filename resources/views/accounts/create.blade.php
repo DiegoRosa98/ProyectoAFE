@@ -164,7 +164,7 @@
                             @csrf
                             <div class="form-group col-md-12 my-2">
                                 <label for="">No Cuenta:</label>
-                                <input type="text" class="form-control" id="numeroCuenta" name="numeroCuenta" disabled>
+                                <input type="text" class="form-control" name="numeroCuenta" id="numeroCuenta" readonly>
                             </div>
                             <div class="form-group col-md-12 my-2">
                                 <label for="">Usuario Propietario:</label>
@@ -181,7 +181,7 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" name="idBanco" value="1">
+                            <input type="hidden" name="monto" value="0">
                             <input type="hidden" name="estado" value="1">
                             <div class="d-flex justify-content-center mt-3">
                                 <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">

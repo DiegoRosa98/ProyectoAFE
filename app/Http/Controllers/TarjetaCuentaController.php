@@ -20,7 +20,7 @@ class TarjetaCuentaController extends Controller
     public function index()
     {
         $tarjetas = $this->tarjetas->getCards();
-        return view('cards/cards.list', ['tarjetas' => $tarjetas]);
+        return view('cards.list', ['tarjetas' => $tarjetas]);
     }
 
     /**
@@ -30,7 +30,7 @@ class TarjetaCuentaController extends Controller
      */
     public function create()
     {
-        return view('cards/cards.create');
+        return view('cards.create');
     }
 
     /**
@@ -43,7 +43,7 @@ class TarjetaCuentaController extends Controller
     {
         $tarjetas = new TarjetaCuenta($request->all());
         $tarjetas->save();
-        return redirect()->action([TarjetaCuentaController::class, 'index']);
+        return redirect()->action([TarjetaCuentaController::class, 'index'])->with('message', 'Created successfully.');
     }
 
     /**
@@ -66,7 +66,7 @@ class TarjetaCuentaController extends Controller
     public function edit($id)
     {
         $tarjetas = $this->tarjetas->getCardById($id);
-        return view('cards/cards.edit', ['tarjetas' => $tarjetas]);
+        return view('cards.edit', ['tarjetas' => $tarjetas]);
     }
 
     /**
@@ -81,7 +81,7 @@ class TarjetaCuentaController extends Controller
         $tarjetas = TarjetaCuenta::find($id);
         $tarjetas->fill($request->all());
         $tarjetas->save();
-        return redirect()->action([TarjetaCuentaController::class, 'index']);
+        return redirect()->action([TarjetaCuentaController::class, 'index'])->with('message', 'Updated successfully.');
     }
 
     /**
@@ -92,6 +92,10 @@ class TarjetaCuentaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $card = TarjetaCuenta::find($id);
+        if($card->count() > 0){
+            TarjetaCuenta::where('id', $id)->update(array('estado' => 0));
+        }
+        return redirect()->action([TarjetaCuentaController::class, 'index'])->with('message', 'Deleted successfully.');
     }
 }

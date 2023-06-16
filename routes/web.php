@@ -9,6 +9,7 @@ use App\Http\Controllers\PerfilesController;
 use App\Http\Controllers\BancoController;
 use App\Http\Controllers\CuentasController;
 use App\Http\Controllers\TipoCuentaController;
+use App\Http\Controllers\TarjetaCuentaController;
 
 // --------------------- Public routes --------------------------------- //
 Route::get('/', function () {
@@ -22,9 +23,7 @@ Route::get('/logout/{type}', [UsuariosController::class, 'logout']);
 Route::get('/respuesta', function () {
     return view('respuesta');
 });
-Route::get('/home', function () {
-    return view('home-client');
-});
+Route::get('/home', [UsuariosController::class, 'client']);
 
 // ----------------- cliente routes ----------------------------------------- //
 Route::get('/perfil', [PerfilesController::class, 'show']);
@@ -69,3 +68,11 @@ Route::post('/admin/cuentas/crear', [CuentasController::class, 'store']);
 Route::get('/admin/cuentas/editar/{id}', [CuentasController::class, 'edit']);
 Route::put('/admin/cuentas/editar/{id}', [CuentasController::class, 'update']);
 Route::get('/admin/cuentas/eliminar/{id}', [CuentasController::class, 'destroy']);
+/* cards admin routes */
+Route::get('/admin/tarjeta', [TarjetaCuentaController::class, 'index']);
+Route::get('/admin/tarjeta/crear', [TarjetaCuentaController::class, 'create']);
+Route::post('/admin/tarjeta/crear', [TarjetaCuentaController::class, 'store']);
+Route::get('/admin/tarjeta/editar/{id}', [TarjetaCuentaController::class, 'edit']);
+Route::put('/admin/tarjeta/editar/{id}', [TarjetaCuentaController::class, 'update']);
+Route::get('/admin/tarjeta/eliminar/{id}', [TarjetaCuentaController::class, 'destroy']);
+

@@ -162,15 +162,6 @@
                     </div>
                 </a>
 
-                <a href="/admin/bancos">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bxs-bank nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Gestión de Bancos</h5>
-                        </div>
-                    </div>
-                </a>
-
                 <a href="/admin/tipo-cuenta">
                     <div class="card m-1">
                         <div class="card-body d-flex align-items-center">
@@ -189,14 +180,14 @@
                     </div>
                 </a>
 
-                <a href="/admin/tipo-servicios">
+                <!-- <a href="/admin/tipo-servicios">
                     <div class="card m-1">
                         <div class="card-body d-flex align-items-center">
                             <i class="bx bx-album nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
                             <h5 class="text-center">Configuración de Tipo de Servicios</h5>
                         </div>
                     </div>
-                </a>
+                </a> -->
 
                 <a href="/admin/servicios">
                     <div class="card m-1">

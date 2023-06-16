@@ -258,9 +258,9 @@
                                     <h6>Última modificación: {{ $cuenta->updated_at }}</h6>
                                 </div>
                                 <div>
-                                    <a class="btn btn-outline-primary btn-edit" href="/admin/cuentas/editar/{{$cuenta->id}}">
+                                    <!-- <a class="btn btn-outline-primary btn-edit" href="/admin/cuentas/editar/{{$cuenta->id}}">
                                         <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
-                                    </a>
+                                    </a> -->
                                     <a class="btn btn-outline-danger btn-del" role="button" onclick="deleteConfirm('{{$cuenta->id}}')">
                                         <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
                                     </a>
