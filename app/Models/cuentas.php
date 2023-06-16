@@ -35,4 +35,11 @@ class Cuentas extends Model
     public function getAccountsById($id) {
         return Cuentas::find($id);
     }
+
+    public function actualizarMontos($idOrigen, $montoOrigen, $idDestino, $montoDestino)
+    {
+        Cuentas::where('id', $idOrigen)->update(array('monto' => $montoOrigen));
+        Cuentas::where('id', $idDestino)->update(array('monto' => $montoDestino));
+    }
+    
 }

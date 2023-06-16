@@ -41,6 +41,29 @@ class ViewCuentas extends Model
             session_start();
         }
         $idUser = $_SESSION['ID'];
-        return ViewCuentas::where('idUsuario', $idUser)->get();
+        return ViewCuentas::where('idUsuario', $idUser)->where('estado', 1)->get();
     }
+
+    public function getAccountByUserTransfer(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $idUser = $_SESSION['ID'];
+        return ViewCuentas::where('idUsuario', $idUser)->where('estado', 1)->first();
+    }
+    
+    public function getAccountByNoCuentaDestino($NoCuentaDestino){
+        $res;
+        $cuentaDestino = ViewCuentas::where('numeroCuenta', $NoCuentaDestino)->where('estado', 1)->first();
+        if($cuentaDestino != null)
+        {
+            $res=$cuentaDestino;
+        }
+        else
+        {
+            $res=false;
+        }
+        return $res;
+    }
+
 }

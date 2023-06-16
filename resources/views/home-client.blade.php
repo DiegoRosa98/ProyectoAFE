@@ -108,7 +108,7 @@
                         <span class="nav_logo-name">Banco GSA-SIFE</span>
                     </a>
                     <div class="nav_list">
-                        <a href="/cuentas" class="nav_link active">
+                        <a href="/cuentas" class="nav_link">
                             <i class="bx bxs-bank nav_icon"></i>
                             <span class="nav_name">Cuenta</span>
                         </a>

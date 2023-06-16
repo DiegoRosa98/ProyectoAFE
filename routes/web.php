@@ -10,6 +10,7 @@ use App\Http\Controllers\BancoController;
 use App\Http\Controllers\CuentasController;
 use App\Http\Controllers\TipoCuentaController;
 use App\Http\Controllers\TarjetaCuentaController;
+use App\Http\Controllers\TransaccionesController;
 
 // --------------------- Public routes --------------------------------- //
 Route::get('/', function () {
@@ -28,6 +29,13 @@ Route::get('/home', [UsuariosController::class, 'client']);
 // ----------------- cliente routes ----------------------------------------- //
 Route::get('/perfil', [PerfilesController::class, 'show']);
 Route::post('/perfil/guardar', [PerfilesController::class, 'guardar']);
+Route::get('/cuentas', [CuentasController::class, 'ver']);
+Route::get('/cuentas/crear', [CuentasController::class, 'crear']);
+Route::post('/cuentas/guardar', [CuentasController::class, 'guardar']);
+Route::get('/cuentas/eliminar/{id}', [CuentasController::class, 'delete']);
+Route::get('/transferencias', [TransaccionesController::class, 'index']);
+Route::get('/transferencias/crear', [TransaccionesController::class, 'create']);
+Route::post('/transferencias/guardar', [TransaccionesController::class, 'store']);
 
 // ----------------- admin routes ----------------------------------------- //
 Route::get('/admin', function () {
