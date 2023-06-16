@@ -224,9 +224,9 @@
                 <a href="/admin" class="btn btn-outline-secondary btn-back mx-2">
                     <i class="bx bx-arrow-back nav_icon" style="vertical-align: sub;"></i>Regresar
                 </a>
-                <a href="/admin/roles/crear" class="btn btn-outline-secondary btn-add" >
+                <!-- <a href="/admin/roles/crear" class="btn btn-outline-secondary btn-add" >
                     <i class="bx bx-plus nav_icon" style="vertical-align: sub;"></i>Nuevo Rol
-                </a>
+                </a> -->
             </div>
 
             <!-- data list -->
@@ -249,13 +249,13 @@
                                     <h6>Última modificación: {{ $rol->updated_at }}</h6>
                                 </div>
                                 <div>
-                                    <a class="btn btn-outline-primary btn-edit" href="/admin/roles/editar/{{$rol->id}}">
+                                    @if($rol->id > 2)
+                                    <!-- <a class="btn btn-outline-primary btn-edit" href="/admin/roles/editar/{{$rol->id}}">
                                         <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
                                     </a>
-                                    @if($rol->id > 2)
                                     <a class="btn btn-outline-danger btn-del" role="button" onclick="deleteConfirm('{{$rol->id}}')">
                                         <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
-                                    </a>
+                                    </a> -->
                                     @endif
                                 </div>
                             </div>

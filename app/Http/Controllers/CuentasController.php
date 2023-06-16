@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cuentas;
 use App\Models\ViewCuentas;
+use App\Models\Usuarios;
 
 class CuentasController extends Controller
 {
     protected $cuentas;
     protected $vcuentas;
+    protected $usuarios;
 
-    public function __construct(Cuentas $cuentas, ViewCuentas $vcuentas){
+    public function __construct(Cuentas $cuentas, ViewCuentas $vcuentas, Usuarios $usuarios){
         $this->cuentas = $cuentas;
         $this->vcuentas = $vcuentas;
+        $this->usuarios = $usuarios;
     }
 
     /**
@@ -34,7 +37,8 @@ class CuentasController extends Controller
      */
     public function create()
     {
-        return view('accounts.create');
+        $users = $this->usuarios->getAllUsers();
+        return view('accounts.create', ['users' => $users]);
     }
 
     public function crear()

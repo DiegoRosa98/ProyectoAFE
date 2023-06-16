@@ -29,6 +29,10 @@ class Usuarios extends Model
         return Usuarios::where('estado', 1)->paginate(5);
     }
 
+    public function getAllUsers() {
+        return Usuarios::where('estado', 1)->get();
+    }
+
     /**
      * Method for retrieving an especific user
      */

@@ -168,14 +168,24 @@
                             </div>
                             <div class="form-group col-md-12 my-2">
                                 <label for="">Usuario Propietario:</label>
-                                <input type="text" class="form-control" name="idUsuario" required>
+                                <select class="form-select" name="idUsuario" required>
+                                    @foreach($users as $user)
+                                        <option value="{{ $user->id }}">{{$user->username}}</option>
+                                    @endforeach
+                                    @if($users->count() === 0)
+                                        <option>No hay registros</option>
+                                    @endif
+                                </select>
                                 <div class="invalid-feedback">
                                     This field is invalid
                                 </div>
                             </div>
                             <div class="form-group col-md-12 my-2">
                                 <label for="">Tipo de Cuenta:</label>
-                                <input type="text" class="form-control" name="idTipoCuenta" required>
+                                <select class="form-select" name="idTipoCuenta" required>
+                                    <option value="1">Ahorros</option>
+                                    <option selected value="2">Corriente</option>
+                                </select>
                                 <div class="invalid-feedback">
                                     This field is invalid
                                 </div>
@@ -232,15 +242,16 @@
                 // Loop over them and prevent submission
                 Array.from(forms).forEach(form => {
                     form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
 
-                    form.classList.add('was-validated')
-                    }, false)
-                })
-            })()
+
+                        form.classList.add('was-validated')
+                        }, false)
+                    })
+                })()
         </script>
     </body>
 </html>
