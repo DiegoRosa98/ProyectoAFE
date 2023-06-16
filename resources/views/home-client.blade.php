@@ -150,14 +150,14 @@
             <h4>Mis Cuentas</h4>
 
 
-            @if($data->cuenta->count() == 0)
+            @if($cuenta->count() == 0)
             <div class="card my-3">
                 <div class="card-body">
                     <h6>Usted no posee cuentas activas.</h6>
                 </div>
             </div>
             @endif
-            @foreach ($data as $cuenta)
+            @foreach ($cuenta as $c)
             <div class="card my-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">

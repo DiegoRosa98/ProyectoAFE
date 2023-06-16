@@ -11,13 +11,11 @@ class UsuariosController extends Controller
 
     protected $usuarios;
     protected $cuentas;
-    protected $tarjetas;
 
-    public function __construct(Usuarios $usuarios, ViewCuentas $cuenta, TarjetaCuenta $tarjetas)
+    public function __construct(Usuarios $usuarios, ViewCuentas $cuenta)
     {
         $this->usuarios = $usuarios;
         $this->cuentas = $cuenta;
-        $this->tarjetas = $tarjetas;
     }
 
     /**
