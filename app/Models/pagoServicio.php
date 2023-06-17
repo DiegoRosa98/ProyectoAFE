@@ -35,4 +35,5 @@ class PagoServicio extends Model
     public function getServicesPaymentById($id) {
         return PagoServicio::find($id);
     }
+    
 }

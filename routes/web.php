@@ -11,6 +11,7 @@ use App\Http\Controllers\CuentasController;
 use App\Http\Controllers\TipoCuentaController;
 use App\Http\Controllers\TarjetaCuentaController;
 use App\Http\Controllers\TransaccionesController;
+use App\Http\Controllers\PagoServicioController;
 
 // --------------------- Public routes --------------------------------- //
 Route::get('/', function () {
@@ -36,6 +37,9 @@ Route::get('/cuentas/eliminar/{id}', [CuentasController::class, 'delete']);
 Route::get('/transferencias', [TransaccionesController::class, 'index']);
 Route::get('/transferencias/crear', [TransaccionesController::class, 'create']);
 Route::post('/transferencias/guardar', [TransaccionesController::class, 'store']);
+Route::get('/servicios', [PagoServicioController::class, 'index']);
+Route::get('/servicios/crear/{id}', [PagoServicioController::class, 'create']);
+Route::post('/servicios/guardar', [PagoServicioController::class, 'store']);
 
 // ----------------- admin routes ----------------------------------------- //
 Route::get('/admin', function () {

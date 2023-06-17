@@ -40,4 +40,9 @@ class Transacciones extends Model
         return Transacciones::where('idCuentaOrigen', $idCO)->orWhere('idCuentaDestino', $idCO)->get();
     }
 
+    public function ultimaIDTransaccion()
+    {
+        return Transacciones::latest()->first()->id;
+    }
+
 }

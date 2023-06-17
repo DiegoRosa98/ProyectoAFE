@@ -16,7 +16,7 @@ class CreatePagoServicioTable extends Migration
         Schema::create('pago_servicio', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('numeroRecivo', 255);
+            $table->string('numeroRecibo', 255);
             $table->float('monto', 8, 2);
             $table->unsignedBigInteger('idTipoServicio');
             $table->foreign('idTipoServicio')->references('id')->on('tipo_servicio');
