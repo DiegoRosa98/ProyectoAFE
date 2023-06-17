@@ -5,15 +5,16 @@
     }
     $now = date('Y-m-d H:i:s');
     if($_SESSION){
-        $usuario = $_SESSION['USER'];
         if($now>$_SESSION['EXPIRES'])
         {
-            return redirect()->to('/logout')->send();
+            return redirect()->to('/logout/1')->send();
         }
         if($_SESSION['ROL']!=2)
         {
-            return redirect()->to('/admin')->send();
+            return redirect()->to('/home')->send();
         }
+    }else{
+        return redirect()->to('/')->send();
     }
 ?>
 <!DOCTYPE html>
@@ -22,7 +23,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Your Account</title>
+        <title>Servicios</title>
 
         <!-- sweetalert -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -38,7 +39,49 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
         <!-- template style -->
         <style>
-            :root{--header-height: 3rem;--nav-width: 68px;--first-color: #528D7D;--first-color-light: #AFA5D9;--white-color: #F7F6FB;--body-font: 'Nunito', sans-serif;--normal-font-size: 1rem;--z-fixed: 100}*,::before,::after{box-sizing: border-box}body{position: relative;margin: var(--header-height) 0 0 0;padding: 0 1rem;font-family: var(--body-font);font-size: var(--normal-font-size);transition: .5s}a{text-decoration: none}.header{width: 100%;height: var(--header-height);position: fixed;top: 0;left: 0;display: flex;align-items: center;justify-content: space-between;padding: 0 1rem;background-color: var(--white-color);z-index: var(--z-fixed);transition: .5s}.header_toggle{color: var(--first-color);font-size: 1.5rem;cursor: pointer}.header_img{width: 35px;height: 35px;display: flex;justify-content: center;border-radius: 50%;overflow: hidden}.header_img img{width: 40px}.l-navbar{position: fixed;top: 0;left: -30%;width: var(--nav-width);height: 100vh;background-color: var(--first-color);padding: .5rem 1rem 0 0;transition: .5s;z-index: var(--z-fixed)}.nav{height: 100%;display: flex;flex-direction: column;justify-content: space-between;overflow: hidden}.nav_logo, .nav_link{display: grid;grid-template-columns: max-content max-content;align-items: center;column-gap: 1rem;padding: .5rem 0 .5rem 1.5rem}.nav_logo{margin-bottom: 2rem}.nav_logo-icon{font-size: 1.25rem;color: var(--white-color)}.nav_logo-name{color: var(--white-color);font-weight: 700}.nav_link{position: relative;color: var(--first-color-light);margin-bottom: 1.5rem;transition: .3s}.nav_link:hover{color: var(--white-color)}.nav_icon{font-size: 1.25rem}.show{left: 0}.body-pd{padding-left: calc(var(--nav-width) + 1rem)}.active{color: var(--white-color)}.active::before{content: '';position: absolute;left: 0;width: 2px;height: 32px;background-color: var(--white-color)}.height-100{height:100vh}@media screen and (min-width: 768px){body{margin: calc(var(--header-height) + 1rem) 0 0 0;padding-left: calc(var(--nav-width) + 2rem)}.header{height: calc(var(--header-height) + 1rem);padding: 0 2rem 0 calc(var(--nav-width) + 2rem)}.header_img{width: 40px;height: 40px}.header_img img{width: 45px}.l-navbar{left: 0;padding: 1rem 1rem 0 0}.show{width: calc(var(--nav-width) + 156px)}.body-pd{padding-left: calc(var(--nav-width) + 188px)}}
+            :root{--header-height: 3rem;--nav-width: 68px;--first-color: #528D7D;--first-color-light: #AFA5D9;--white-color: #F7F6FB;--body-font: 'Nunito', sans-serif;--normal-font-size: 1rem;--z-fixed: 100}*,::before,::after{box-sizing: border-box}body{position: relative;margin: var(--header-height) 0 0 0;padding: 0 1rem;font-family: var(--body-font);font-size: var(--normal-font-size);transition: .5s}a{text-decoration: none}.header{width: 100%;height: var(--header-height);position: fixed;top: 0;left: 0;display: flex;align-items: center;justify-content: space-between;padding: 0 1rem;background-color: var(--white-color);z-index: var(--z-fixed);transition: .5s}.header_toggle{color: var(--first-color);font-size: 1.5rem;cursor: pointer}.header_img{width: 35px;height: 35px;display: flex;justify-content: center;border-radius: 50%;overflow: hidden}.header_img img{width: 40px}.l-navbar{position: fixed;top: 0;left: -30%;width: var(--nav-width);height: 100vh;background-color: var(--first-color);padding: .5rem 1rem 0 0;transition: .5s;z-index: var(--z-fixed)}.nav{height: 100%;display: flex;flex-direction: column;justify-content: space-between;overflow: hidden}.nav_logo, .nav_link{display: grid;grid-template-columns: max-content max-content;align-items: center;column-gap: 1rem;padding: .5rem 0 .5rem 1.5rem}.nav_logo{margin-bottom: 2rem}.nav_logo-icon{font-size: 1.25rem;color: var(--white-color)}.nav_logo-name{color: var(--white-color);font-weight: 700}.nav_link{position: relative;color: var(--first-color-light);margin-bottom: 1.5rem;transition: .3s}.nav_link:hover{color: var(--white-color)}.nav_icon{font-size: 1.25rem}.show{left: 0}.body-pd{padding-left: calc(var(--nav-width) + 1rem)}.active{color: var(--white-color)}.active::before{content: '';position: absolute;left: 0;width: 2px;height: 32px;background-color: var(--white-color)}.height-100{height:100vh}@media screen and (min-width: 768px){body{margin: calc(var(--header-height) + 1rem) 0 0 0;padding-left: calc(var(--nav-width) + 2rem)}.header{height: calc(var(--header-height) + 1rem);padding: 0 2rem 0 calc(var(--nav-width) + 2rem)}.header_img{width: 40px;height: 40px}.header_img img{width: 45px}.l-navbar{left: 0;padding: 1rem 1rem 0 0}.show{width: calc(var(--nav-width) + 156px)}.body-pd{padding-left: calc(var(--nav-width) + 188px)}.page-link{color:#528D7D;}}
+            .btn-add{
+                background-color: #528D7D;
+                border-color: #528D7D;
+                color: white;
+            }
+            .btn-add:hover{
+                background-color: white;
+                border-color: #528D7D;
+                color: #528D7D;
+                font-weight: 700;
+            }
+            .btn-back{
+                background-color: #4E86B9;
+                border-color: #4E86B9;
+                color: white;
+            }
+            .btn-back:hover{
+                background-color: white;
+                border-color: #4E86B9;
+                color: #4E86B9;
+                font-weight: 700;
+            }
+            .btn-edit{
+                background-color: white;
+                border-color: #4E86B9;
+                color: #4E86B9;
+            }
+            .btn-edit:hover{
+                background-color: #4E86B9;
+                border-color: #4E86B9;
+                color: white;
+            }
+            .btn-del{
+                background-color: white;
+                border-color: #CA3838;
+                color: #CA3838;
+            }
+            .btn-del:hover{
+                background-color: #CA3838;
+                border-color: #CA3838;
+                color: white;
+            }
         </style>
         <!-- template script -->
         <script>
@@ -84,6 +127,7 @@
         </script>
     </head>
     <body id="body-pd" style="background-color: #F7F6FB;">
+        <!-- template -->
         <header class="header" id="header">
             <div class="header_toggle">
                 <i class="bx bx-menu" id="header-toggle"></i>
@@ -96,12 +140,39 @@
                 </a>
                 <a href="#" class="">
                     <i class="bx bx-user nav_icon"></i>
-                    <?php echo($usuario) ?>
                 </a>
             </div>
         </header>
+        <script>
+            function logoutConfirm() {
+                Swal.fire({
+                    title: '¡Advertencia!',
+                    text: '¿Está seguro de salir?',
+                    icon: 'warning',
+                    confirmButtonText: 'Sí',
+                    showDenyButton: true,
+                    denyButtonText: 'No',
+
+                }).then((result) => {
+                    if(result.isConfirmed) {
+                        window.location.replace('/logout/0')
+                    }
+                })
+            }
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+        </script>
         <div class="l-navbar" id="nav-bar">
-            <nav class="nav">
+        <nav class="nav">
                 <div>
                     <a href="/" class="nav_logo">
                         <i class="bx bx-layer nav_logo-icon"></i>
@@ -120,7 +191,7 @@
                             <i class='bx bx-transfer nav_icon'></i>
                             <span class="nav_name">Transferencias</span>
                         </a>
-                        <a href="/servicios" class="nav_link">
+                        <a href="/servicios" class="nav_link active">
                             <i class='bx bx-dollar-circle nav_icon'></i>
                             <span class="nav_name">Pago de Servicios</span>
                         </a>
@@ -147,105 +218,46 @@
         </div>
         <!--Container Main start-->
         <div class=" bg-light">
-            <h4>Mis Cuentas</h4>
-
-
-            @if($cuenta->count() == 0)
-            <div class="card my-3">
-                <div class="card-body">
-                    <h6>Usted no posee cuentas activas.</h6>
-                </div>
-            </div>
-            @endif
-            @foreach ($cuenta as $c)
-            <div class="card my-3">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex">
-                            <i class="bx bxs-bank nav_icon mx-1"></i>
-                            <h5>Cuenta {{$c->tipoCuenta}}</h5>
-                        </div>
-                    </div>
-                    <h6>Propietario: <?php echo($usuario) ?></h6>
-                    <div class="d-flex justify-content-between">
-                        <label for="">No. {{$c->numeroCuenta}}</label>
-                        <label for="" class="fw-bolder">$ {{$c->monto}}</label>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-
-            <!-- <div class="card my-3">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex">
-                            <i class="bx bx-credit-card nav_icon mx-1"></i>
-                            <h5>Tarjeta de crédito</h5>
-                        </div>
-                        <a href="#">
-                            <i class="bx bx-chevron-right nav_icon mx-1"></i>
-                        </a>
-                    </div>
-                    <h6><?php echo($usuario) ?></h6>
-                    <div class="d-flex justify-content-between">
-                        <label for="">xxxx xxxx xxxx 6045</label>
-                        <div>
-                            <label for="" class="fw-bolder">$50.24</label>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-        </div>
-        <br>
-        <div class=" bg-light">
-            <h4>Transacciones</h4>
-
-            <div class="d-flex flex-wrap mx-2 my-3">
-                <a href="/transferencias">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bx-transfer nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Transferir</h5>
-                        </div>
-                    </div>
+            <h4 class="text-center">Pagar Servicios</h4>
+            <div class="d-flex justify-content-between my-3 mx-3">
+                <a href="/home" class="btn btn-outline-secondary btn-back mx-2">
+                    <i class="bx bx-arrow-back nav_icon" style="vertical-align: sub;"></i>Regresar
                 </a>
+            </div>
 
-                <a href="/servicios">
+           <div class="mx-3">
+            @if(session("message"))
+                    <script>
+                        Toast.fire({
+                            icon: 'error',
+                            title: '{{session("message")}}'
+                        });
+                    </script>
+            @endif
+            @if($servicios->count() == 0)       
+                <div class="card col-12 m-2">
+                    <div class="card-body">
+                        <h5 class="text-center fw-bolder">No hay servicios disponibles para pagar</h5>
+                    </div>
+                </div>
+            @endif
+            </div>
+
+            <div class="d-flex justify-content-center flex-wrap mx-2 my-3">
+            @foreach ($servicios as $servicio)    
+                
+                <a href="/servicios/crear/{{$servicio->id}}">
                     <div class="card m-1">
                         <div class="card-body d-flex align-items-center">
                             <i class="bx bx-dollar-circle nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Pago de servicios</h5>
+                            <h5 class="text-center">{{$servicio->nombre}}</h5>
                         </div>
                     </div>
-                </a>
+                </a>               
 
+            @endforeach
             </div>
-        </div>
-        <br>
-        <div class=" bg-light">
-            <h4>Ajustes</h4>
-
-            <div class="d-flex flex-wrap mx-2 my-3">
-
-                <a href="/perfil">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bx-user nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Administrar perfil</h5>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="/cuentas">
-                    <div class="card m-1">
-                        <div class="card-body d-flex align-items-center">
-                            <i class="bx bxs-bank nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Administrar cuentas</h5>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
+            
         </div>
         <!--Container Main end-->
         <script>

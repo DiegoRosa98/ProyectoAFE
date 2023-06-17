@@ -41,6 +41,16 @@ class CuentasController extends Controller
         return view('accounts.create', ['users' => $users]);
     }
 
+    public function crear()
+    {
+        return view('nueva-cuenta');
+    }
+
+    public function crear()
+    {
+        return view('nueva-cuenta');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -55,6 +65,14 @@ class CuentasController extends Controller
         return redirect()->action([CuentasController::class, 'index'])->with('message', 'Created successfully.');
     }
 
+    public function guardar(Request $request)
+    {
+        echo($request);
+        $cuentas = new Cuentas($request->all());
+        $cuentas->save();
+        return redirect()->action([CuentasController::class, 'ver'])->with('message', 'Created successfully.');
+    }
+
     /**
      * Display the specified resource.
      *
@@ -64,6 +82,12 @@ class CuentasController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function ver()
+    {
+        $vcuentas = $this->vcuentas->getAccountByUser();
+        return view('/cuentas', ['cuentas' => $vcuentas]);
     }
 
     /**
@@ -106,5 +130,14 @@ class CuentasController extends Controller
             Cuentas::where('id', $id)->update(array('estado' => 0));
         }
         return redirect()->action([CuentasController::class, 'index'])->with('message', 'Deleted successfully.');
+    }
+
+    public function delete($id)
+    {
+        $cuentas = Cuentas::find($id);
+        if($cuentas->count() > 0){
+            Cuentas::where('id', $id)->update(array('estado' => 0));
+        }
+        return redirect()->action([CuentasController::class, 'ver'])->with('message', 'Deleted successfully.');
     }
 }

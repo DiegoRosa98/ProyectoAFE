@@ -7,7 +7,7 @@
     if($_SESSION){
         if($now>$_SESSION['EXPIRES'])
         {
-            return redirect()->to('/logout')->send();
+            return redirect()->to('/logout/1')->send();
         }
         if($_SESSION['ROL']!=2)
         {
@@ -16,29 +16,6 @@
     }else{
         return redirect()->to('/')->send();
     }
-
-    if(!(is_null($perfil)))
-    {
-        $id = $perfil->id;
-        $nombreCompleto = $perfil->nombreCompleto;
-        $edad = $perfil->edad;
-        $sexo = $perfil->sexo;
-        $estadoCivil = $perfil->estadoCivil;
-        $direccion = $perfil->direccion;
-        $dui = $perfil->dui;
-        $nit = $perfil->nit;
-    }
-    else
-    {
-        $id = "";
-        $nombreCompleto = "";
-        $edad = "";
-        $sexo = "";
-        $estadoCivil = "";
-        $direccion = "";
-        $dui = "";
-        $nit = "";
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +23,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Perfil</title>
+        <title>Cuentas</title>
 
         <!-- sweetalert -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -82,48 +59,6 @@
                 background-color: white;
                 border-color: #CA3838;
                 color: #CA3838;
-            }
-            .btn-add{
-                background-color: #528D7D;
-                border-color: #528D7D;
-                color: white;
-            }
-            .btn-add:hover{
-                background-color: white;
-                border-color: #528D7D;
-                color: #528D7D;
-                font-weight: 700;
-            }
-            .btn-back{
-                background-color: #4E86B9;
-                border-color: #4E86B9;
-                color: white;
-            }
-            .btn-back:hover{
-                background-color: white;
-                border-color: #4E86B9;
-                color: #4E86B9;
-                font-weight: 700;
-            }
-            .btn-edit{
-                background-color: white;
-                border-color: #4E86B9;
-                color: #4E86B9;
-            }
-            .btn-edit:hover{
-                background-color: #4E86B9;
-                border-color: #4E86B9;
-                color: white;
-            }
-            .btn-del{
-                background-color: white;
-                border-color: #CA3838;
-                color: #CA3838;
-            }
-            .btn-del:hover{
-                background-color: #CA3838;
-                border-color: #CA3838;
-                color: white;
             }
         </style>
         <!-- template script -->
@@ -187,121 +122,66 @@
             </div>
         </header>
         <div class="l-navbar" id="nav-bar">
-        <nav class="nav">
+            <nav class="nav">
                 <div>
-                    <a href="/" class="nav_logo">
+                    <a href="#" class="nav_logo">
                         <i class="bx bx-layer nav_logo-icon"></i>
                         <span class="nav_logo-name">Banco GSA-SIFE</span>
                     </a>
                     <div class="nav_list">
-                        <a href="/cuentas" class="nav_link">
+                        <a href="/" class="nav_link">
                             <i class="bx bxs-bank nav_icon"></i>
-                            <span class="nav_name">Cuenta</span>
+                            <span class="nav_name">Home</span>
                         </a>
-                        <a href="/perfil" class="nav_link active">
+
+                        <!-- <a href="#" class="nav_link">
                             <i class="bx bx-user nav_icon"></i>
                             <span class="nav_name">Perfil</span>
                         </a>
-                        <a href="/transferencias" class="nav_link">
-                            <i class='bx bx-transfer nav_icon'></i>
-                            <span class="nav_name">Transferencias</span>
-                        </a>
-                        <a href="/servicios" class="nav_link">
-                            <i class='bx bx-dollar-circle nav_icon'></i>
-                            <span class="nav_name">Pago de Servicios</span>
-                        </a>
-                        <!-- <a href="#" class="nav_link">
-                            <i class="bx bx-message-square-detail nav_icon"></i>
-                            <span class="nav_name">Messages</span>
-                        </a> -->
-                        <!-- <a href="#" class="nav_link">
+                        <a href="#" class="nav_link">
                             <i class="bx bx-abacus nav_icon"></i>
-                            <span class="nav_name">Servicios</span>
-                        </a> -->
-                        <!-- <a href="#" class="nav_link">
-                            <i class="bx bx-folder nav_icon"></i>
-                            <span class="nav_name">Files</span>
+                            <span class="nav_name">Configuración</span>
                         </a> -->
 
                     </div>
                 </div>
-                <a role="button" onclick="logoutConfirm()" class="nav_link">
+                <!-- <a role="button" onclick="logoutConfirm()" class="nav_link">
                     <i class="bx bx-log-out nav_icon"></i>
                     <span class="nav_name">Log Out</span>
-                </a>
+                </a> -->
             </nav>
         </div>
         <!-- end template -->
         <!--Container Main start-->
         <div class=" bg-light">
-            
-            <h4>Perfil</h4>
-            
-            <div class="d-flex justify-content-center">
-                <div class="card col-6">
+            <h4 class="text-center">Gestión de Cuentas</h4>
+
+            <div class="d-flex justify-content-center mt-5">
+                <div class="card col-lg-6 col-sm-12">
                     <div class="card-body">
-                        <input type="hidden" name="selectSex" id="selectSex" value="{{$sexo}}">
-                        <input type="hidden" name="selectEC" id="selectEC" value="{{$estadoCivil}}">
-                        <form class="needs-validation" novalidate action="/perfil/guardar" method="POST">
+                        <h5>Nuevo Registro</h5>
+                        <form class="needs-validation row" novalidate action="/cuentas/guardar" method="POST">
                             @csrf
-                            {{ method_field('POST') }}
-                            <div class="form-group col-12">
-                                <input type="hidden" class="form-control" name="id" id="id" required value="{{$id}}">
-                                <label for="">Nombre Completo:</label>
-                                <input type="text" class="form-control" name="nombreCompleto" id="nombreCompleto" required value="{{$nombreCompleto}}">
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <label for="">Edad:</label>
-                                <input type="number" class="form-control" name="edad" id="edad" required value="{{$edad}}">
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <label for="">Sexo:</label>
-                                <select class="form-control" name="sexo" id="sexo" required>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Femenino">Femenino</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <label for="">Estado Cívil:</label>
-                                <select class="form-control" name="estadoCivil" id="estadoCivil" required>
-                                    <option value="Soltero/a">Soltero/a</option>
-                                    <option value="Casado/a">Casado/a</option>
-                                    <option value="Divorciado/a">Divorciado/a</option>
-                                    <option value="Viudo/a">Viudo/a</option>
-                                </select>
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <label for="">Dirección:</label>
-                                <textarea class="form-control" name="direccion" id="direccion" cols="50" rows="5" required>{{$direccion}}</textarea>
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <label for="">DUI:</label>
-                                <input type="text" class="form-control" name="dui" id="dui" required value="{{$dui}}">
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <label for="">NIT:</label>
-                                <input type="text" class="form-control" name="nit" id="nit" required value="{{$nit}}">
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <input type="hidden" name="idUsuario" id="idUsuario" value="{{$_SESSION['ID']}}">
-                                <input type="hidden" name="estado" value="1">
+                            <div class="form-group col-md-12 my-2">
+                                <label for="">No Cuenta:</label>
+                                <input type="text" class="form-control" name="numeroCuenta" id="numeroCuenta" readonly>
                             </div>
+                            <input type="hidden" class="form-control" name="idUsuario" id="idUsuario" value="{{$_SESSION['ID']}}" required>
+                            <div class="form-group col-md-12 my-2">
+                                <label for="">Tipo de Cuenta:</label>
+                                <select class="form-control" name="idTipoCuenta" id="idTipoCuenta" required>
+                                    <option value="1">Ahorro</option>
+                                    <option value="2">Corriente</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    This field is required.
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="monto" value="0">
+                            <input type="hidden" name="estado" value="1">
                             <div class="d-flex justify-content-center mt-3">
-                            <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">
+                                <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">
                                     <i class="bx bx-x nav_icon" style="vertical-align: sub;"></i>Cancelar
                                 </button>
                                 <button type="submit" class="btn btn-outline-secondary btn-save mx-2">
@@ -311,64 +191,24 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-1">
-                </div>
-                <div class="card col-5" style="height: 425px;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex">
-                                <i class="bx bx-user nav_icon mx-1"></i>
-                                <h5>Información Personal</h5>
-                            </div>
-                        </div>
-                        <div class="">
-                                <br>
-                                <label for="">Nombre Completo: {{$nombreCompleto}}</label>
-                                <br>
-                                <br>
-                                <label for="">Edad: {{$edad}}</label>
-                                <br>
-                                <br>
-                                <label for="">Sexo: {{$sexo}}</label>
-                                <br>
-                                <br>
-                                <label for="">Estado Cívil: {{$estadoCivil}}</label>
-                                <br>
-                                <br>
-                                <label for="">Dirección: {{$direccion}}</label>
-                                <br>
-                                <br>
-                                <label for="">DUI: {{$dui}}</label>
-                                <br>
-                                <br>
-                                <label for="">NIT: {{$nit}}</label>
-                        </div>
-                    </div>
-                </div>
             </div>
-
         </div>
         <!--Container Main end-->
-        <script>
-            function logoutConfirm() {
-                Swal.fire({
-                    title: '¡Advertencia!',
-                    text: '¿Está seguro de salir?',
-                    icon: 'warning',
-                    confirmButtonText: 'Sí',
-                    showDenyButton: true,
-                    denyButtonText: 'No',
 
-                }).then((result) => {
-                    if(result.isConfirmed) {
-                        window.location.replace('/logout')
-                    }
-                })
+        <script>
+            function getRandomInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min + 1)) + min;
             }
+
+            var noCuenta = getRandomInt(2000, 5000);
+            document.getElementById('numeroCuenta').value = noCuenta.valueOf().toString();
+
             function cancelConfirm() {
                 Swal.fire({
                     title: '¡Advertencia!',
-                    text: '¿Está seguro de regresar? No se guardarán los cambios.',
+                    text: '¿Está seguro de regresar?',
                     icon: 'warning',
                     confirmButtonText: 'Sí',
                     showDenyButton: true,
@@ -376,12 +216,10 @@
 
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.replace('/')
+                        window.location.replace('/cuentas')
                     }
                 })
             }
-            $('#sexo').val($('#selectSex').val());
-            $('#estadoCivil').val($('#selectEC').val());
             (() => {
                 'use strict'
 

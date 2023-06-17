@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PagoServicio;
+use App\Models\TipoServicio;
+use App\Models\Transacciones;
+use App\Models\ViewCuentas;
+use App\Models\Cuentas;
 
 class PagoServicioController extends Controller
 {
     protected $pagoServicio;
 
-    public function __construct(PagoServicio $pagoServicio){
+    public function __construct(PagoServicio $pagoServicio, TipoServicio $tipoServicio, Transacciones $transacciones, ViewCuentas $vcuentas, Cuentas $cuentas){
         $this->pagoServicio = $pagoServicio;
+        $this->tipoServicio = $tipoServicio;
+        $this->transacciones = $transacciones;
+        $this->vcuentas = $vcuentas;
+        $this->cuentas = $cuentas;
     }
 
     /**
@@ -20,8 +28,8 @@ class PagoServicioController extends Controller
      */
     public function index()
     {
-        $pagoServicio = $this->pagoServicio->getServicesPayment();
-        return view('services-payment/services-payment.list', ['pagoServicio' => $pagoServicio]);
+        $tipoServicio = $this->tipoServicio->getServiciosDisponibles();
+        return view('/servicios', ['servicios' => $tipoServicio]);
     }
 
     /**
@@ -29,9 +37,9 @@ class PagoServicioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('services-payment/services-payment.create');
+        return view('/pago-servicios', ['id' => $id]);
     }
 
     /**
@@ -42,9 +50,49 @@ class PagoServicioController extends Controller
      */
     public function store(Request $request)
     {
-        $pagoServicio = new PagoServicio($request->all());
-        $pagoServicio->save();
-        return redirect()->action([PagoServicioController::class, 'index']);
+        $tipoServicio = $this->tipoServicio->getServiceTypeById($request->post('idTipoServicio'));
+        ////////////////////////////////////////////////////////////CREAR TRANSACCIÓN////////////////////////////////////////////////////////////
+        $ValCuentaDestino = $this->vcuentas->getAccountByNoCuentaDestino('4114');
+
+        if($ValCuentaDestino != false)
+        {
+            $cuentaOrigen = $this->vcuentas->getAccountByUserTransfer();
+
+            if(($cuentaOrigen->monto - $request->post('monto')) <= 0.00)
+            {
+                return redirect('/servicios')->with('message', 'No puede transferir la cantidad solicitada por saldo insuficiente');
+            }
+            else
+            {
+                ///////////////////////////////////////////REGISTRO DE TRANSFERENCIA//////////////////////////////////////////////
+                $transacciones = new Transacciones();
+                $transacciones->numeroCuentaOrigen = $cuentaOrigen->numeroCuenta;
+                $transacciones->numeroCuentaDestino = '4114';
+                $transacciones->monto = $request->post('monto');
+                $transacciones->descripcion = 'Deposito para pagar servicio: '.$tipoServicio->nombre;
+                $transacciones->correoNotificacion = 'pagos@afe.com';  
+                $transacciones->idCuentaOrigen = $cuentaOrigen->id;
+                $transacciones->idCuentaDestino = $ValCuentaDestino->id;
+                $transacciones->estado = 1;
+                $transacciones->save();
+                /////////////////////////////////ACTUALIZAR MONTOS CUENTAS ORIGEN Y DESTINO///////////////////////////////////////
+                $montoOrigen = $cuentaOrigen->monto - $request->post('monto');
+                $montoDestino = $ValCuentaDestino->monto + $request->post('monto');
+                $this->cuentas->actualizarMontos($cuentaOrigen->id, $montoOrigen, $ValCuentaDestino->id, $montoDestino);
+                ////////////////////////////////////////////////////PAGAR SERVICIO////////////////////////////////////////////////
+                $pagoServicio = new PagoServicio($request->all());
+                $pagoServicio->idTransaccion = $this->transacciones->ultimaIDTransaccion();
+                $pagoServicio->save();
+                ///////////////////////////////////////////////REDIRECCIONAMIENTO/////////////////////////////////////////////////
+                return redirect()->action([TransaccionesController::class, 'index']);
+            }
+
+        }
+        else
+        {
+            return redirect('/transferencias')->with('message', 'Cuenta de destino no encontrada');
+        }
+
     }
 
     /**

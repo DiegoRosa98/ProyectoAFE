@@ -35,4 +35,9 @@ class TipoServicio extends Model
     public function getServiceTypeById($id) {
         return TipoServicio::find($id);
     }
+
+    public function getServiciosDisponibles()
+    {
+        return TipoServicio::where('estado', 1)->get();
+    }
 }

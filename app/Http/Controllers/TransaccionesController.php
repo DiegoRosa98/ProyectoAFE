@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Transacciones;
+use App\Models\ViewCuentas;
+use App\Models\Cuentas;
 
 class TransaccionesController extends Controller
 {
     protected $transacciones;
 
-    public function __construct(Transacciones $transacciones){
+    public function __construct(Transacciones $transacciones, ViewCuentas $vcuentas, Cuentas $cuentas){
         $this->transacciones = $transacciones;
+        $this->vcuentas = $vcuentas;
+        $this->cuentas = $cuentas;
     }
     /**
      * Display a listing of the resource.
@@ -19,8 +23,9 @@ class TransaccionesController extends Controller
      */
     public function index()
     {
-        $transacciones = $this->transacciones->getTransactions();
-        return view('transactions/transactions.list', ['transacciones' => $transacciones]);
+        $vcuentas = $this->vcuentas->getAccountByUserTransfer();
+        $transfer = $this->transacciones->getTransactionsByCuentaOrigen($vcuentas->id);
+        return view('/transferencias', ['transfer' => $transfer, 'miCuenta' => $vcuentas->id]);
     }
 
     /**
@@ -30,7 +35,7 @@ class TransaccionesController extends Controller
      */
     public function create()
     {
-        return view('transactions/transactions.create');
+        return view('/nueva-transferencia');
     }
 
     /**
@@ -41,9 +46,38 @@ class TransaccionesController extends Controller
      */
     public function store(Request $request)
     {
-        $transacciones = new Transacciones($request->all());
-        $transacciones->save();
-        return redirect()->actTransaccionesion([TransaccionesController::class, 'index']);
+        $ValCuentaDestino = $this->vcuentas->getAccountByNoCuentaDestino($request->post('numeroCuentaDestino'));
+
+        if($ValCuentaDestino != false)
+        {
+            $cuentaOrigen = $this->vcuentas->getAccountByUserTransfer();
+
+            if(($cuentaOrigen->monto - $request->post('monto')) <= 0.00)
+            {
+                return redirect('/transferencias')->with('message', 'No puede transferir la cantidad solicitada por saldo insuficiente');
+            }
+            else
+            {
+                ///////////////////////////////////////////REGISTRO DE TRANSFERENCIA//////////////////////////////////////////////
+                $transacciones = new Transacciones($request->all());
+                $transacciones->numeroCuentaOrigen = $cuentaOrigen->numeroCuenta;
+                $transacciones->idCuentaOrigen = $cuentaOrigen->id;
+                $transacciones->idCuentaDestino = $ValCuentaDestino->id;
+                $transacciones->save();
+                /////////////////////////////////ACTUALIZAR MONTOS CUENTAS ORIGEN Y DESTINO///////////////////////////////////////
+                $montoOrigen = $cuentaOrigen->monto - $request->post('monto');
+                $montoDestino = $ValCuentaDestino->monto + $request->post('monto');
+                $this->cuentas->actualizarMontos($cuentaOrigen->id, $montoOrigen, $ValCuentaDestino->id, $montoDestino);
+                ///////////////////////////////////////////////REDIRECCIONAMIENTO/////////////////////////////////////////////////
+                return redirect()->action([TransaccionesController::class, 'index']);
+            }
+
+        }
+        else
+        {
+            return redirect('/transferencias')->with('message', 'Cuenta de destino no encontrada');
+        }
+
     }
 
     /**

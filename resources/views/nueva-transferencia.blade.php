@@ -17,28 +17,6 @@
         return redirect()->to('/')->send();
     }
 
-    if(!(is_null($perfil)))
-    {
-        $id = $perfil->id;
-        $nombreCompleto = $perfil->nombreCompleto;
-        $edad = $perfil->edad;
-        $sexo = $perfil->sexo;
-        $estadoCivil = $perfil->estadoCivil;
-        $direccion = $perfil->direccion;
-        $dui = $perfil->dui;
-        $nit = $perfil->nit;
-    }
-    else
-    {
-        $id = "";
-        $nombreCompleto = "";
-        $edad = "";
-        $sexo = "";
-        $estadoCivil = "";
-        $direccion = "";
-        $dui = "";
-        $nit = "";
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +24,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Perfil</title>
+        <title>Transferir</title>
 
         <!-- sweetalert -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -198,11 +176,11 @@
                             <i class="bx bxs-bank nav_icon"></i>
                             <span class="nav_name">Cuenta</span>
                         </a>
-                        <a href="/perfil" class="nav_link active">
+                        <a href="/perfil" class="nav_link">
                             <i class="bx bx-user nav_icon"></i>
                             <span class="nav_name">Perfil</span>
                         </a>
-                        <a href="/transferencias" class="nav_link">
+                        <a href="/transferencias" class="nav_link active">
                             <i class='bx bx-transfer nav_icon'></i>
                             <span class="nav_name">Transferencias</span>
                         </a>
@@ -235,69 +213,39 @@
         <!--Container Main start-->
         <div class=" bg-light">
             
-            <h4>Perfil</h4>
+            <h4>Transferir</h4>
             
             <div class="d-flex justify-content-center">
                 <div class="card col-6">
                     <div class="card-body">
-                        <input type="hidden" name="selectSex" id="selectSex" value="{{$sexo}}">
-                        <input type="hidden" name="selectEC" id="selectEC" value="{{$estadoCivil}}">
-                        <form class="needs-validation" novalidate action="/perfil/guardar" method="POST">
+                        <form class="needs-validation" novalidate action="/transferencias/guardar" method="POST">
                             @csrf
                             {{ method_field('POST') }}
                             <div class="form-group col-12">
-                                <input type="hidden" class="form-control" name="id" id="id" required value="{{$id}}">
-                                <label for="">Nombre Completo:</label>
-                                <input type="text" class="form-control" name="nombreCompleto" id="nombreCompleto" required value="{{$nombreCompleto}}">
+                                <label for="">Numero Cuenta Destino:</label>
+                                <input type="number" class="form-control" name="numeroCuentaDestino" id="numeroCuentaDestino" required>
                                 <div class="invalid-feedback">
                                     This field is required.
                                 </div>
                                 <br>
-                                <label for="">Edad:</label>
-                                <input type="number" class="form-control" name="edad" id="edad" required value="{{$edad}}">
+                                <label for="">Monto:</label>
+                                <input type="number" class="form-control" name="monto" id="monto" step=".01" min="0.01" required>
                                 <div class="invalid-feedback">
                                     This field is required.
                                 </div>
                                 <br>
-                                <label for="">Sexo:</label>
-                                <select class="form-control" name="sexo" id="sexo" required>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Femenino">Femenino</option>
-                                </select>
+                                <label for="">Descripcion:</label>
+                                <textarea class="form-control" name="descripcion" id="descripcion" cols="50" rows="5" required></textarea>
                                 <div class="invalid-feedback">
                                     This field is required.
                                 </div>
                                 <br>
-                                <label for="">Estado Cívil:</label>
-                                <select class="form-control" name="estadoCivil" id="estadoCivil" required>
-                                    <option value="Soltero/a">Soltero/a</option>
-                                    <option value="Casado/a">Casado/a</option>
-                                    <option value="Divorciado/a">Divorciado/a</option>
-                                    <option value="Viudo/a">Viudo/a</option>
-                                </select>
+                                <label for="">Correo Notificacion:</label>
+                                <input type="email" class="form-control" name="correoNotificacion" id="correoNotificacion" required>
                                 <div class="invalid-feedback">
                                     This field is required.
                                 </div>
                                 <br>
-                                <label for="">Dirección:</label>
-                                <textarea class="form-control" name="direccion" id="direccion" cols="50" rows="5" required>{{$direccion}}</textarea>
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <label for="">DUI:</label>
-                                <input type="text" class="form-control" name="dui" id="dui" required value="{{$dui}}">
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <label for="">NIT:</label>
-                                <input type="text" class="form-control" name="nit" id="nit" required value="{{$nit}}">
-                                <div class="invalid-feedback">
-                                    This field is required.
-                                </div>
-                                <br>
-                                <input type="hidden" name="idUsuario" id="idUsuario" value="{{$_SESSION['ID']}}">
                                 <input type="hidden" name="estado" value="1">
                             </div>
                             <div class="d-flex justify-content-center mt-3">
@@ -309,40 +257,6 @@
                                 </button>
                             </div>
                         </form>
-                    </div>
-                </div>
-                <div class="col-1">
-                </div>
-                <div class="card col-5" style="height: 425px;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex">
-                                <i class="bx bx-user nav_icon mx-1"></i>
-                                <h5>Información Personal</h5>
-                            </div>
-                        </div>
-                        <div class="">
-                                <br>
-                                <label for="">Nombre Completo: {{$nombreCompleto}}</label>
-                                <br>
-                                <br>
-                                <label for="">Edad: {{$edad}}</label>
-                                <br>
-                                <br>
-                                <label for="">Sexo: {{$sexo}}</label>
-                                <br>
-                                <br>
-                                <label for="">Estado Cívil: {{$estadoCivil}}</label>
-                                <br>
-                                <br>
-                                <label for="">Dirección: {{$direccion}}</label>
-                                <br>
-                                <br>
-                                <label for="">DUI: {{$dui}}</label>
-                                <br>
-                                <br>
-                                <label for="">NIT: {{$nit}}</label>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -376,12 +290,10 @@
 
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.replace('/')
+                        window.location.replace('/transferencias')
                     }
                 })
             }
-            $('#sexo').val($('#selectSex').val());
-            $('#estadoCivil').val($('#selectEC').val());
             (() => {
                 'use strict'
 
