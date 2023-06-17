@@ -189,14 +189,14 @@
                     </div>
                 </a> -->
 
-                <a href="/admin/servicios">
+                <!-- <a href="/admin/servicios">
                     <div class="card m-1">
                         <div class="card-body d-flex align-items-center">
                             <i class="bx bx-album nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
                             <h5 class="text-center">Administración de Servicios</h5>
                         </div>
                     </div>
-                </a>
+                </a> -->
 
             </div>
         </div>
