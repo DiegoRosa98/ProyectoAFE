@@ -46,11 +46,6 @@ class CuentasController extends Controller
         return view('nueva-cuenta');
     }
 
-    public function crear()
-    {
-        return view('nueva-cuenta');
-    }
-
     /**
      * Store a newly created resource in storage.
      *
