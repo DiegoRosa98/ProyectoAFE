@@ -198,16 +198,22 @@
                             <i class="bx bxs-bank nav_icon"></i>
                             <span class="nav_name">Home</span>
                         </a>
-
-                        <!-- <a href="#" class="nav_link">
-                            <i class="bx bx-user nav_icon"></i>
-                            <span class="nav_name">Perfil</span>
+                        <a href="/admin/roles" class="nav_link">
+                            <i class="bx bxs-user-account nav_icon"></i>
+                            <span class="nav_name">Roles</span>
                         </a>
-                        <a href="#" class="nav_link">
+                        <a href="/admin/usuarios" class="nav_link">
+                            <i class="bx bxs-user-check nav_icon"></i>
+                            <span class="nav_name">Usuarios</span>
+                        </a>
+                        <a href="/admin/tipo-cuenta" class="nav_link">
                             <i class="bx bx-abacus nav_icon"></i>
-                            <span class="nav_name">Configuración</span>
-                        </a> -->
-
+                            <span class="nav_name">Tipo Cuentas</span>
+                        </a>
+                        <a href="/admin/cuentas" class="nav_link active">
+                            <i class="bx bx-credit-card nav_icon"></i>
+                            <span class="nav_name">Cuentas</span>
+                        </a>
                     </div>
                 </div>
                 <a role="button" onclick="logoutConfirm()" class="nav_link">
