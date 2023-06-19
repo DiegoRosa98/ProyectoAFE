@@ -14,6 +14,12 @@
         {
             return redirect()->to('/admin')->send();
         }
+        if($perfil->count() == 0)
+        {
+            return redirect()->to('/perfil')->send();
+        }
+    }else{
+        return redirect()->to('/')->send();
     }
 ?>
 <!DOCTYPE html>
@@ -96,7 +102,7 @@
                 </a>
                 <a href="#" class="">
                     <i class="bx bx-user nav_icon"></i>
-                    <?php echo($usuario) ?>
+                    <?php if($perfil->count() > 0) { echo($perfil[0]->nombreCompleto); } else { echo($usuario); }?>
                 </a>
             </div>
         </header>
@@ -166,7 +172,7 @@
                             <h5>Cuenta {{$c->tipoCuenta}}</h5>
                         </div>
                     </div>
-                    <h6>Propietario: <?php echo($usuario) ?></h6>
+                    <h6>Propietario: {{$perfil[0]->nombreCompleto}}</h6>
                     <div class="d-flex justify-content-between">
                         <label for="">No. {{$c->numeroCuenta}}</label>
                         <label for="" class="fw-bolder">$ {{$c->monto}}</label>

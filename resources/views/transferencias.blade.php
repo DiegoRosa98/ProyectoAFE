@@ -140,6 +140,7 @@
                 </a>
                 <a href="#" class="">
                     <i class="bx bx-user nav_icon"></i>
+                    <?php if($perfil->count() > 0) { echo($perfil[0]->nombreCompleto); } else { echo($usuario); }?>
                 </a>
             </div>
         </header>

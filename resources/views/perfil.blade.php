@@ -9,10 +9,7 @@
         {
             return redirect()->to('/logout')->send();
         }
-        if($_SESSION['ROL']!=2)
-        {
-            return redirect()->to('/home')->send();
-        }
+
     }else{
         return redirect()->to('/')->send();
     }
@@ -182,7 +179,7 @@
                     <i class="bx bxs-bell nav_icon"></i>
                 </a>
                 <a href="#" class="">
-                    <i class="bx bx-user nav_icon"></i>
+                    <i class="bx bx-user nav_icon"></i><?php if($perfil){ echo($perfil->nombreCompleto); } ?>
                 </a>
             </div>
         </header>
@@ -194,7 +191,7 @@
                         <span class="nav_logo-name">Banco GSA-SIFE</span>
                     </a>
                     <div class="nav_list">
-                        <a href="/cuentas" class="nav_link">
+                        <!-- <a href="/cuentas" class="nav_link">
                             <i class="bx bxs-bank nav_icon"></i>
                             <span class="nav_name">Cuenta</span>
                         </a>
@@ -209,15 +206,15 @@
                         <a href="/servicios" class="nav_link">
                             <i class='bx bx-dollar-circle nav_icon'></i>
                             <span class="nav_name">Pago de Servicios</span>
-                        </a>
+                        </a> -->
                         <!-- <a href="#" class="nav_link">
                             <i class="bx bx-message-square-detail nav_icon"></i>
                             <span class="nav_name">Messages</span>
                         </a> -->
-                        <!-- <a href="#" class="nav_link">
-                            <i class="bx bx-abacus nav_icon"></i>
-                            <span class="nav_name">Servicios</span>
-                        </a> -->
+                        <a href="/" class="nav_link">
+                            <i class="bx bx-home nav_icon"></i>
+                            <span class="nav_name">Home</span>
+                        </a>
                         <!-- <a href="#" class="nav_link">
                             <i class="bx bx-folder nav_icon"></i>
                             <span class="nav_name">Files</span>
@@ -234,10 +231,25 @@
         <!-- end template -->
         <!--Container Main start-->
         <div class=" bg-light">
-            
+
             <h4>Perfil</h4>
-            
-            <div class="d-flex justify-content-center">
+            @if($perfil)
+            <div class="d-flex justify-content-between my-3 mx-1">
+                <a href="/home" class="btn btn-outline-secondary btn-back mx-2">
+                    <i class="bx bx-arrow-back nav_icon" style="vertical-align: sub;"></i>Regresar
+                </a>
+            </div>
+            @endif
+
+            @if(!$perfil)
+            <div class="container d-flex justify-content-center">
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <i class="bx bx-info-circle nav_icon mx-2"></i>
+                    Por favor, complete su información para continuar.
+                </div>
+            </div>
+            @endif
+            <div class="d-flex justify-content-center px-3 mb-3">
                 <div class="card col-6">
                     <div class="card-body">
                         <input type="hidden" name="selectSex" id="selectSex" value="{{$sexo}}">
@@ -301,9 +313,11 @@
                                 <input type="hidden" name="estado" value="1">
                             </div>
                             <div class="d-flex justify-content-center mt-3">
-                            <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">
+                                @if($perfil)
+                                <button type="button" class="btn btn-outline-secondary btn-cancel mx-2" onclick="cancelConfirm()">
                                     <i class="bx bx-x nav_icon" style="vertical-align: sub;"></i>Cancelar
                                 </button>
+                                @endif
                                 <button type="submit" class="btn btn-outline-secondary btn-save mx-2">
                                     <i class="bx bx-save nav_icon" style="vertical-align: sub;"></i>Guardar
                                 </button>
@@ -361,7 +375,7 @@
 
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.replace('/logout')
+                        window.location.replace('/logout/0')
                     }
                 })
             }

@@ -8,17 +8,26 @@ use App\Models\TipoServicio;
 use App\Models\Transacciones;
 use App\Models\ViewCuentas;
 use App\Models\Cuentas;
+use App\Models\Perfiles;
 
 class PagoServicioController extends Controller
 {
     protected $pagoServicio;
 
-    public function __construct(PagoServicio $pagoServicio, TipoServicio $tipoServicio, Transacciones $transacciones, ViewCuentas $vcuentas, Cuentas $cuentas){
+    public function __construct(
+        PagoServicio $pagoServicio,
+        TipoServicio $tipoServicio,
+        Transacciones $transacciones,
+        ViewCuentas $vcuentas,
+        Cuentas $cuentas,
+        Perfiles $pefiles
+    ){
         $this->pagoServicio = $pagoServicio;
         $this->tipoServicio = $tipoServicio;
         $this->transacciones = $transacciones;
         $this->vcuentas = $vcuentas;
         $this->cuentas = $cuentas;
+        $this->pefiles = $pefiles;
     }
 
     /**
@@ -29,7 +38,8 @@ class PagoServicioController extends Controller
     public function index()
     {
         $tipoServicio = $this->tipoServicio->getServiciosDisponibles();
-        return view('/servicios', ['servicios' => $tipoServicio]);
+        $perfiles = $this->pefiles->getPerfilByUser();
+        return view('/servicios', ['servicios' => $tipoServicio, 'perfil' => $perfiles]);
     }
 
     /**
@@ -70,7 +80,7 @@ class PagoServicioController extends Controller
                 $transacciones->numeroCuentaDestino = '4114';
                 $transacciones->monto = $request->post('monto');
                 $transacciones->descripcion = 'Deposito para pagar servicio: '.$tipoServicio->nombre;
-                $transacciones->correoNotificacion = 'pagos@afe.com';  
+                $transacciones->correoNotificacion = 'pagos@afe.com';
                 $transacciones->idCuentaOrigen = $cuentaOrigen->id;
                 $transacciones->idCuentaDestino = $ValCuentaDestino->id;
                 $transacciones->estado = 1;

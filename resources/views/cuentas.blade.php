@@ -140,6 +140,7 @@
                 </a>
                 <a href="#" class="">
                     <i class="bx bx-user nav_icon"></i>
+                    <?php if($perfil->count() > 0) { echo($perfil[0]->nombreCompleto); } else { echo($usuario); }?>
                 </a>
             </div>
         </header>
@@ -268,7 +269,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h5 class="fw-bolder">{{ $cuenta->username }}</h5>
+                                    <h5 class="fw-bolder">{{ $perfil[0]->nombreCompleto }}</h5>
                                     <h6>No Cuenta: {{ $cuenta->numeroCuenta }}</h6>
                                     <h6>Tipo Cuenta: {{ $cuenta->tipoCuenta }}</h6>
                                     <h6>Fecha creación: {{ $cuenta->created_at }}</h6>
@@ -278,9 +279,9 @@
                                     <!-- <a class="btn btn-outline-primary btn-edit" href="/admin/cuentas/editar/{{$cuenta->id}}">
                                         <i class="bx bx-pencil nav_icon mx-1" style="vertical-align: middle;"></i>
                                     </a> -->
-                                    <a class="btn btn-outline-danger btn-del" role="button" onclick="deleteConfirm('{{$cuenta->id}}')">
+                                    <!-- <a class="btn btn-outline-danger btn-del" role="button" onclick="deleteConfirm('{{$cuenta->id}}')">
                                         <i class="bx bx-trash nav_icon mx-1" style="vertical-align: middle;"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         </div>

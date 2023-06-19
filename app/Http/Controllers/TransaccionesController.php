@@ -6,15 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Transacciones;
 use App\Models\ViewCuentas;
 use App\Models\Cuentas;
+use App\Models\Perfiles;
 
 class TransaccionesController extends Controller
 {
     protected $transacciones;
+    protected $perfiles;
 
-    public function __construct(Transacciones $transacciones, ViewCuentas $vcuentas, Cuentas $cuentas){
+    public function __construct(Transacciones $transacciones, ViewCuentas $vcuentas, Cuentas $cuentas, Perfiles $perfiles){
         $this->transacciones = $transacciones;
         $this->vcuentas = $vcuentas;
         $this->cuentas = $cuentas;
+        $this->perfiles = $perfiles;
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +28,8 @@ class TransaccionesController extends Controller
     {
         $vcuentas = $this->vcuentas->getAccountByUserTransfer();
         $transfer = $this->transacciones->getTransactionsByCuentaOrigen($vcuentas->id);
-        return view('/transferencias', ['transfer' => $transfer, 'miCuenta' => $vcuentas->id]);
+        $perfil = $this->perfiles->getPerfilByUser();
+        return view('/transferencias', ['transfer' => $transfer, 'miCuenta' => $vcuentas->id, 'perfil' => $perfil]);
     }
 
     /**

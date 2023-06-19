@@ -35,4 +35,12 @@ class Perfiles extends Model
     public function getProfileById($id) {
         return Perfiles::find($id);
     }
+
+    public function getPerfilByUser(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $idUser = $_SESSION['ID'];
+        return Perfiles::where('idUsuario',$idUser)->get();
+    }
 }

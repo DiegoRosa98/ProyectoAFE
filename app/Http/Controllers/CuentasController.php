@@ -6,17 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Cuentas;
 use App\Models\ViewCuentas;
 use App\Models\Usuarios;
+use App\Models\Perfiles;
 
 class CuentasController extends Controller
 {
     protected $cuentas;
     protected $vcuentas;
     protected $usuarios;
+    protected $perfiles;
 
-    public function __construct(Cuentas $cuentas, ViewCuentas $vcuentas, Usuarios $usuarios){
+    public function __construct(Cuentas $cuentas, ViewCuentas $vcuentas, Usuarios $usuarios, Perfiles $perfiles){
         $this->cuentas = $cuentas;
         $this->vcuentas = $vcuentas;
         $this->usuarios = $usuarios;
+        $this->perfiles = $perfiles;
     }
 
     /**
@@ -54,15 +57,19 @@ class CuentasController extends Controller
      */
     public function store(Request $request)
     {
-        echo($request);
-        $cuentas = new Cuentas($request->all());
-        $cuentas->save();
-        return redirect()->action([CuentasController::class, 'index'])->with('message', 'Created successfully.');
+        $usuario = Cuentas::where('idUsuario', $request->idUsuario)->get();
+        echo($usuario->count());
+        if($usuario->count() > 0){
+            return redirect()->action([CuentasController::class, 'create'])->with('error', 'Users can only have 1 account.');
+        }else{
+            $cuentas = new Cuentas($request->all());
+            $cuentas->save();
+            return redirect()->action([CuentasController::class, 'index'])->with('message', 'Created successfully.');
+        }
     }
 
     public function guardar(Request $request)
     {
-        echo($request);
         $cuentas = new Cuentas($request->all());
         $cuentas->save();
         return redirect()->action([CuentasController::class, 'ver'])->with('message', 'Created successfully.');
@@ -82,7 +89,8 @@ class CuentasController extends Controller
     public function ver()
     {
         $vcuentas = $this->vcuentas->getAccountByUser();
-        return view('/cuentas', ['cuentas' => $vcuentas]);
+        $perfiles = $this->perfiles->getPerfilByUser();
+        return view('/cuentas', ['cuentas' => $vcuentas, 'perfil' => $perfiles]);
     }
 
     /**

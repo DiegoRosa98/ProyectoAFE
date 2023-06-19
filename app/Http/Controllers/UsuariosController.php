@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
 use App\Models\ViewCuentas;
+use App\Models\Perfiles;
 
 class UsuariosController extends Controller
 {
 
     protected $usuarios;
     protected $cuentas;
+    protected $perfil;
 
-    public function __construct(Usuarios $usuarios, ViewCuentas $cuenta)
+    public function __construct(Usuarios $usuarios, ViewCuentas $cuenta, Perfiles $perfil)
     {
         $this->usuarios = $usuarios;
         $this->cuentas = $cuenta;
+        $this->perfil = $perfil;
     }
 
     /**
@@ -32,7 +35,15 @@ class UsuariosController extends Controller
     public function client()
     {
         $cuenta = $this->cuentas->getAccountByUser();
-        return view('home-client', ['cuenta' => $cuenta]);
+        $perfil = $this->perfil->getPerfilByUser();
+        return view('home-client', ['cuenta' => $cuenta, 'perfil' => $perfil]);
+    }
+
+    public function admin()
+    {
+        $cuenta = $this->cuentas->getAccountByUser();
+        $perfil = $this->perfil->getPerfilByUser();
+        return view('home-admin', ['cuenta' => $cuenta, 'perfil' => $perfil]);
     }
 
     /**

@@ -140,6 +140,7 @@
                 </a>
                 <a href="#" class="">
                     <i class="bx bx-user nav_icon"></i>
+                    <?php if($perfil->count() > 0) { echo($perfil[0]->nombreCompleto); } else { echo($usuario); }?>
                 </a>
             </div>
         </header>
@@ -234,7 +235,7 @@
                         });
                     </script>
             @endif
-            @if($servicios->count() == 0)       
+            @if($servicios->count() == 0)
                 <div class="card col-12 m-2">
                     <div class="card-body">
                         <h5 class="text-center fw-bolder">No hay servicios disponibles para pagar</h5>
@@ -244,8 +245,8 @@
             </div>
 
             <div class="d-flex justify-content-center flex-wrap mx-2 my-3">
-            @foreach ($servicios as $servicio)    
-                
+            @foreach ($servicios as $servicio)
+
                 <a href="/servicios/crear/{{$servicio->id}}">
                     <div class="card m-1">
                         <div class="card-body d-flex align-items-center">
@@ -253,11 +254,11 @@
                             <h5 class="text-center">{{$servicio->nombre}}</h5>
                         </div>
                     </div>
-                </a>               
+                </a>
 
             @endforeach
             </div>
-            
+
         </div>
         <!--Container Main end-->
         <script>

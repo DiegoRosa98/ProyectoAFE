@@ -42,9 +42,7 @@ Route::get('/servicios/crear/{id}', [PagoServicioController::class, 'create']);
 Route::post('/servicios/guardar', [PagoServicioController::class, 'store']);
 
 // ----------------- admin routes ----------------------------------------- //
-Route::get('/admin', function () {
-    return view('home-admin');
-});
+Route::get('/admin', [UsuariosController::class, 'admin']);
 /* roles routes */
 Route::get('/admin/roles', [RolesController::class, 'index']);
 Route::get('/admin/roles/crear', [RolesController::class, 'create']);

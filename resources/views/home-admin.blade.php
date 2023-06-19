@@ -14,6 +14,10 @@
             return redirect()->to('/home')->send();
         }
         $usuario = $_SESSION['USER'];
+        if($perfil->count() == 0)
+        {
+            return redirect()->to('/perfil')->send();
+        }
     }else{
         return redirect()->to('/')->send();
     }
@@ -105,7 +109,7 @@
                 </a>
                 <a href="#" class="">
                     <i class="bx bx-user nav_icon"></i>
-                    <?php echo($usuario) ?>
+                    <?php if($perfil->count() > 0) { echo($perfil[0]->nombreCompleto); } else { echo($usuario); }?>
                 </a>
             </div>
         </header>
@@ -148,7 +152,7 @@
                     <div class="card m-1">
                         <div class="card-body d-flex align-items-center">
                             <i class="bx bxs-user-account nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Configuración de Roles</h5>
+                            <h5 class="text-center">Roles</h5>
                         </div>
                     </div>
                 </a>
@@ -166,7 +170,7 @@
                     <div class="card m-1">
                         <div class="card-body d-flex align-items-center">
                             <i class="bx bx-abacus nav_icon mx-1 menu-i" style="vertical-align: middle;"></i>
-                            <h5 class="text-center">Configuración de Tipos de Cuentas</h5>
+                            <h5 class="text-center">Tipos de Cuentas</h5>
                         </div>
                     </div>
                 </a>

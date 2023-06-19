@@ -102,6 +102,17 @@
 
                 // Your code to run since DOM is loaded and ready
             });
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
         </script>
     </head>
     <body id="body-pd" style="background-color: #F7F6FB;">
@@ -160,6 +171,14 @@
                 <div class="card col-lg-6 col-sm-12">
                     <div class="card-body">
                         <h5>Nuevo Registro</h5>
+                        @if(session("error"))
+                            <script>
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: '{{session("error")}}'
+                                });
+                            </script>
+                        @endif
                         <form class="needs-validation row" novalidate action="/admin/cuentas/crear" method="POST">
                             @csrf
                             <div class="form-group col-md-12 my-2">
